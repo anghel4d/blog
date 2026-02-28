@@ -9,12 +9,6 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* ═══════════════════════════════════════════════
-           THEMES — applied via :has() on selected options.
-           No JavaScript required for theme switching.
-           JS only used for localStorage persistence.
-           ═══════════════════════════════════════════════ */
-
         /* ROCK FARM — DARK */
         body:has(#t-limestone-dark:checked) {
             --background: #1a1926; --surface: #3b3a56; --border: #4b4a66;
@@ -116,10 +110,6 @@
             background-size: 600px 36px, 100% 100%;
         }
 
-        /* ═══════════════════════════════════════════════
-           LAYOUT
-           ═══════════════════════════════════════════════ */
-
         body {
             font-family: 'Georgia', serif;
             color: var(--text);
@@ -135,7 +125,6 @@
             min-height: 100svh;
         }
 
-        /* Header */
         header {
             padding-bottom: 20px;
             margin-bottom: 30px;
@@ -165,7 +154,6 @@
             }
         }
 
-        /* Blog entries */
         blog-feed {
             display: block;
         }
@@ -206,7 +194,6 @@
             }
         }
 
-        /* Footer */
         footer {
             border-top: 1px solid var(--border);
             padding: 30px 0;
@@ -239,6 +226,8 @@
         }
     </style>
 </head>
+
+
 <body>
     <site-container>
         <header>
@@ -260,10 +249,9 @@
                 </entry-header>
                 <entry-body>
                     <p>A very happy birthday to Light Yagami, the God of the New World.</p>
-                    <p>And a joyous start to WWIII Everypony.</p>
+                    <p>And a joyous start to WWIII, Everypony.</p>
                 </entry-body>
             </blog-entry>
-
         </blog-feed>
 
         <footer>
@@ -299,6 +287,7 @@
     </site-container>
 
     <!-- Progressive enhancement: persistence + party pop -->
+    <!-- Claude was so goated for ts honestly -->
     <script>
         const themeSelect = document.getElementById('theme-select');
         const saved = localStorage.getItem('rc-theme');
