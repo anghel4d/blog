@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>RainbowCrash.lol</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ═══════════════════════════════════════════════
+           THEMES — applied via :has() on selected options.
+           No JavaScript required for theme switching.
+           JS only used for localStorage persistence.
+           ═══════════════════════════════════════════════ */
+
+        /* ROCK FARM — DARK */
+        body:has(#t-limestone-dark:checked) {
+            --background: #1a1926; --surface: #3b3a56; --border: #4b4a66;
+            --text: #d2d8d8; --accent: #c7da61; --glow: none;
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: color-mix(in srgb, var(--border) 70%, var(--background));
+            background: #1a1926;
+        }
+        body:has(#t-maud-dark:checked) {
+            --background: #10171e; --surface: #293d53; --border: #3b5266;
+            --text: #c2c5ca; --accent: #7de1c4; --glow: none;
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: color-mix(in srgb, var(--border) 70%, var(--background));
+            background: #10171e;
+        }
+        body:has(#t-marble-dark:checked) {
+            --background: #0e1312; --surface: #2e3c35; --border: #313635;
+            --text: #d6e1de; --accent: #a373d8; --glow: none;
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: color-mix(in srgb, var(--border) 70%, var(--background));
+            background: #0e1312;
+        }
+
+        /* ROCK FARM — LIGHT */
+        body:has(#t-limestone-light:checked) {
+            --background: #cccbd6; --surface: #b9b7cb; --border: #807e94;
+            --text: #3b3952; --accent: #6e7e1e; --glow: none;
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: color-mix(in srgb, var(--border) 70%, var(--background));
+            background: #cccbd6;
+        }
+        body:has(#t-maud-light:checked) {
+            --background: #b8bcc5; --surface: #7ba5b8; --border: #4a6579;
+            --text: #141822; --accent: #533588; --glow: none;
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: color-mix(in srgb, var(--border) 70%, var(--background));
+            background: #b8bcc5;
+        }
+        body:has(#t-marble-light:checked) {
+            --background: #cad6d2; --surface: #b6c9c0; --border: #5d7a78;
+            --text: #273332; --accent: #6d3e90; --glow: none;
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: color-mix(in srgb, var(--border) 70%, var(--background));
+            background: #cad6d2;
+        }
+
+        /* BRUTALIST */
+        body:has(#t-brutalist-dark:checked) {
+            --background: #000000; --surface: #0a0a0a; --border: #ffffff;
+            --text: #ffffff; --accent: #00ff00; --glow: none;
+            background: #000000;
+        }
+        body:has(#t-brutalist-light:checked) {
+            --background: #ffffff; --surface: #f5f5f5; --border: #000000;
+            --text: #000000; --accent: #0000ee; --glow: none;
+            background: #ffffff;
+        }
+
+        /* Ponk */
+        body:has(#t-ponk:checked) {
+            --background: #f8b8d0; --surface: #ff8ec0; --border: #e84890;
+            --text: #4a0028; --accent: #4dacd8; --glow: rgba(232, 72, 144, 0.3);
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: #b80060;
+            background:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='66' y='58' width='7' height='3' rx='1' fill='%23447c90' fill-opacity='0.49' transform='rotate(21 66 58)'/%3E%3Crect x='179' y='27' width='6' height='3' rx='1' fill='%236cccf8' fill-opacity='0.63' transform='rotate(-23 179 27)'/%3E%3Crect x='348' y='78' width='6' height='3' rx='1' fill='%23c4ecfc' fill-opacity='0.57' transform='rotate(24 348 78)'/%3E%3Crect x='467' y='88' width='10' height='3' rx='1' fill='%23e0fcfc' fill-opacity='0.65' transform='rotate(-28 467 88)'/%3E%3Crect x='647' y='57' width='9' height='3' rx='1' fill='%23e84890' fill-opacity='0.62' transform='rotate(55 647 57)'/%3E%3Crect x='699' y='69' width='7' height='3' rx='1' fill='%23b80060' fill-opacity='0.59' transform='rotate(53 699 69)'/%3E%3Crect x='25' y='177' width='6' height='3' rx='1' fill='%23447c90' fill-opacity='0.53' transform='rotate(5 25 177)'/%3E%3Crect x='153' y='144' width='10' height='3' rx='1' fill='%236cccf8' fill-opacity='0.56' transform='rotate(-55 153 144)'/%3E%3Crect x='327' y='178' width='6' height='3' rx='1' fill='%23c4ecfc' fill-opacity='0.58' transform='rotate(4 327 178)'/%3E%3Crect x='439' y='187' width='9' height='3' rx='1' fill='%23e0fcfc' fill-opacity='0.54' transform='rotate(-49 439 187)'/%3E%3Crect x='574' y='130' width='9' height='3' rx='1' fill='%23e84890' fill-opacity='0.68' transform='rotate(21 574 130)'/%3E%3Crect x='702' y='174' width='7' height='3' rx='1' fill='%23b80060' fill-opacity='0.48' transform='rotate(-51 702 174)'/%3E%3Crect x='36' y='270' width='9' height='3' rx='1' fill='%23447c90' fill-opacity='0.68' transform='rotate(-45 36 270)'/%3E%3Crect x='228' y='221' width='7' height='3' rx='1' fill='%236cccf8' fill-opacity='0.6' transform='rotate(-16 228 221)'/%3E%3Crect x='329' y='252' width='7' height='3' rx='1' fill='%23c4ecfc' fill-opacity='0.55' transform='rotate(11 329 252)'/%3E%3Crect x='514' y='217' width='7' height='3' rx='1' fill='%23e0fcfc' fill-opacity='0.51' transform='rotate(1 514 217)'/%3E%3Crect x='598' y='226' width='8' height='3' rx='1' fill='%23e84890' fill-opacity='0.57' transform='rotate(33 598 226)'/%3E%3Crect x='687' y='226' width='10' height='3' rx='1' fill='%23b80060' fill-opacity='0.64' transform='rotate(44 687 226)'/%3E%3Crect x='92' y='362' width='6' height='3' rx='1' fill='%23447c90' fill-opacity='0.48' transform='rotate(-43 92 362)'/%3E%3Crect x='185' y='332' width='7' height='3' rx='1' fill='%236cccf8' fill-opacity='0.49' transform='rotate(-3 185 332)'/%3E%3Crect x='307' y='381' width='8' height='3' rx='1' fill='%23c4ecfc' fill-opacity='0.57' transform='rotate(43 307 381)'/%3E%3Crect x='443' y='342' width='6' height='3' rx='1' fill='%23e0fcfc' fill-opacity='0.66' transform='rotate(54 443 342)'/%3E%3Crect x='570' y='319' width='10' height='3' rx='1' fill='%23e84890' fill-opacity='0.45' transform='rotate(-19 570 319)'/%3E%3Crect x='686' y='353' width='7' height='3' rx='1' fill='%23b80060' fill-opacity='0.55' transform='rotate(-7 686 353)'/%3E%3Crect x='118' y='461' width='9' height='3' rx='1' fill='%23447c90' fill-opacity='0.65' transform='rotate(-2 118 461)'/%3E%3Crect x='216' y='421' width='7' height='3' rx='1' fill='%236cccf8' fill-opacity='0.68' transform='rotate(-51 216 421)'/%3E%3Crect x='373' y='461' width='9' height='3' rx='1' fill='%23c4ecfc' fill-opacity='0.53' transform='rotate(-26 373 461)'/%3E%3Crect x='497' y='438' width='8' height='3' rx='1' fill='%23e0fcfc' fill-opacity='0.67' transform='rotate(-42 497 438)'/%3E%3Crect x='639' y='450' width='7' height='3' rx='1' fill='%23e84890' fill-opacity='0.65' transform='rotate(42 639 450)'/%3E%3Crect x='766' y='441' width='9' height='3' rx='1' fill='%23b80060' fill-opacity='0.56' transform='rotate(-18 766 441)'/%3E%3Crect x='25' y='566' width='9' height='3' rx='1' fill='%23447c90' fill-opacity='0.47' transform='rotate(-23 25 566)'/%3E%3Crect x='185' y='551' width='9' height='3' rx='1' fill='%236cccf8' fill-opacity='0.48' transform='rotate(13 185 551)'/%3E%3Crect x='313' y='565' width='8' height='3' rx='1' fill='%23c4ecfc' fill-opacity='0.69' transform='rotate(-3 313 565)'/%3E%3Crect x='492' y='530' width='8' height='3' rx='1' fill='%23e0fcfc' fill-opacity='0.62' transform='rotate(-7 492 530)'/%3E%3Crect x='624' y='589' width='9' height='3' rx='1' fill='%23e84890' fill-opacity='0.54' transform='rotate(-31 624 589)'/%3E%3Crect x='705' y='554' width='6' height='3' rx='1' fill='%23b80060' fill-opacity='0.54' transform='rotate(30 705 554)'/%3E%3Crect x='52' y='634' width='7' height='3' rx='1' fill='%23447c90' fill-opacity='0.61' transform='rotate(46 52 634)'/%3E%3Crect x='232' y='663' width='7' height='3' rx='1' fill='%236cccf8' fill-opacity='0.67' transform='rotate(-3 232 663)'/%3E%3Crect x='325' y='661' width='6' height='3' rx='1' fill='%23c4ecfc' fill-opacity='0.58' transform='rotate(-41 325 661)'/%3E%3Crect x='439' y='610' width='10' height='3' rx='1' fill='%23e0fcfc' fill-opacity='0.69' transform='rotate(-16 439 610)'/%3E%3Crect x='642' y='631' width='10' height='3' rx='1' fill='%23e84890' fill-opacity='0.65' transform='rotate(45 642 631)'/%3E%3Crect x='706' y='643' width='9' height='3' rx='1' fill='%23b80060' fill-opacity='0.59' transform='rotate(4 706 643)'/%3E%3Crect x='95' y='789' width='10' height='3' rx='1' fill='%23447c90' fill-opacity='0.52' transform='rotate(43 95 789)'/%3E%3Crect x='242' y='712' width='6' height='3' rx='1' fill='%236cccf8' fill-opacity='0.53' transform='rotate(48 242 712)'/%3E%3Crect x='355' y='714' width='6' height='3' rx='1' fill='%23c4ecfc' fill-opacity='0.52' transform='rotate(-2 355 714)'/%3E%3Crect x='485' y='790' width='10' height='3' rx='1' fill='%23e0fcfc' fill-opacity='0.52' transform='rotate(18 485 790)'/%3E%3Crect x='643' y='722' width='9' height='3' rx='1' fill='%23e84890' fill-opacity='0.65' transform='rotate(-4 643 722)'/%3E%3Crect x='713' y='768' width='8' height='3' rx='1' fill='%23b80060' fill-opacity='0.67' transform='rotate(-39 713 768)'/%3E%3Ccircle cx='155' cy='87' r='3.3' fill='%23447c90' fill-opacity='0.49'/%3E%3Ccircle cx='355' cy='83' r='2.8' fill='%236cccf8' fill-opacity='0.49'/%3E%3Ccircle cx='618' cy='62' r='2.3' fill='%23c4ecfc' fill-opacity='0.44'/%3E%3Ccircle cx='148' cy='319' r='2.6' fill='%23e0fcfc' fill-opacity='0.52'/%3E%3Ccircle cx='425' cy='291' r='2.9' fill='%23e84890' fill-opacity='0.48'/%3E%3Ccircle cx='689' cy='290' r='3.0' fill='%23b80060' fill-opacity='0.55'/%3E%3Ccircle cx='108' cy='460' r='3.5' fill='%23447c90' fill-opacity='0.45'/%3E%3Ccircle cx='320' cy='472' r='3.2' fill='%236cccf8' fill-opacity='0.36'/%3E%3Ccircle cx='655' cy='430' r='2.9' fill='%23c4ecfc' fill-opacity='0.46'/%3E%3Ccircle cx='121' cy='631' r='2.9' fill='%23e0fcfc' fill-opacity='0.43'/%3E%3Ccircle cx='327' cy='647' r='2.9' fill='%23e84890' fill-opacity='0.36'/%3E%3Ccircle cx='576' cy='636' r='2.5' fill='%23b80060' fill-opacity='0.4'/%3E%3C/svg%3E"),
+                linear-gradient(135deg, #f8b8d0 0%, #f4aec6 50%, #f8b8d0 100%);
+            background-size: 800px 800px, 100% 100%;
+        }
+
+        /* Dashie — DEFAULT for RainbowCrash.lol */
+        body:has(#t-dashie:checked) {
+            --background: #98d8f8; --surface: #e8f4fc; --border: #68a8d8;
+            --text: #1a1040; --accent: #a00870; --glow: rgba(152, 216, 248, 0.2);
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: color-mix(in srgb, var(--border) 70%, var(--background));
+            background: linear-gradient(to bottom, #88ccf0 0%, #98d8f8 15%, #98d8f8 85%, #88ccf0 100%);
+        }
+
+        /* DESERT TEMPLE */
+        body:has(#t-desert-cactus:checked) {
+            --background: #f8d8af; --surface: #f9dbb5; --border: #ad683b;
+            --text: #161826; --accent: #0d5f18; --glow: rgba(139, 90, 43, 0.15);
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: color-mix(in srgb, var(--border) 70%, var(--background));
+            background:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 600 36' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='1' width='600' height='0.4' fill='%23000' fill-opacity='0.018'/%3E%3Crect x='0' y='4' width='600' height='0.7' fill='%23000' fill-opacity='0.022'/%3E%3Crect x='0' y='7.5' width='600' height='0.3' fill='%23000' fill-opacity='0.012'/%3E%3Crect x='0' y='10' width='600' height='0.6' fill='%23000' fill-opacity='0.02'/%3E%3Crect x='0' y='14' width='600' height='0.5' fill='%23000' fill-opacity='0.025'/%3E%3Crect x='0' y='17' width='600' height='0.35' fill='%23000' fill-opacity='0.015'/%3E%3Crect x='0' y='20.5' width='600' height='0.8' fill='%23000' fill-opacity='0.018'/%3E%3Crect x='0' y='24' width='600' height='0.45' fill='%23000' fill-opacity='0.022'/%3E%3Crect x='0' y='27' width='600' height='0.6' fill='%23000' fill-opacity='0.014'/%3E%3Crect x='0' y='30.5' width='600' height='0.5' fill='%23000' fill-opacity='0.02'/%3E%3Crect x='0' y='34' width='600' height='0.35' fill='%23000' fill-opacity='0.016'/%3E%3Cellipse cx='40' cy='3' rx='18' ry='0.7' fill='%23000' fill-opacity='0.018'/%3E%3Cellipse cx='130' cy='8' rx='22' ry='0.5' fill='%23000' fill-opacity='0.015'/%3E%3Cellipse cx='250' cy='2' rx='14' ry='0.8' fill='%23000' fill-opacity='0.02'/%3E%3Cellipse cx='340' cy='12' rx='25' ry='0.6' fill='%23000' fill-opacity='0.016'/%3E%3Cellipse cx='480' cy='6' rx='16' ry='0.9' fill='%23000' fill-opacity='0.018'/%3E%3Cellipse cx='560' cy='15' rx='20' ry='0.5' fill='%23000' fill-opacity='0.014'/%3E%3Cellipse cx='85' cy='19' rx='24' ry='0.7' fill='%23000' fill-opacity='0.02'/%3E%3Cellipse cx='200' cy='23' rx='15' ry='0.6' fill='%23000' fill-opacity='0.017'/%3E%3Cellipse cx='370' cy='28' rx='28' ry='0.8' fill='%23000' fill-opacity='0.015'/%3E%3Cellipse cx='510' cy='21' rx='18' ry='0.5' fill='%23000' fill-opacity='0.019'/%3E%3Cellipse cx='440' cy='33' rx='21' ry='0.7' fill='%23000' fill-opacity='0.016'/%3E%3Cellipse cx='160' cy='31' rx='17' ry='0.6' fill='%23000' fill-opacity='0.018'/%3E%3Cellipse cx='70' cy='11' rx='13' ry='0.5' fill='%23fff' fill-opacity='0.022'/%3E%3Cellipse cx='210' cy='5' rx='16' ry='0.6' fill='%23fff' fill-opacity='0.018'/%3E%3Cellipse cx='350' cy='17' rx='12' ry='0.7' fill='%23fff' fill-opacity='0.025'/%3E%3Cellipse cx='490' cy='9' rx='19' ry='0.5' fill='%23fff' fill-opacity='0.02'/%3E%3Cellipse cx='550' cy='26' rx='14' ry='0.6' fill='%23fff' fill-opacity='0.018'/%3E%3Cellipse cx='120' cy='25' rx='17' ry='0.5' fill='%23fff' fill-opacity='0.022'/%3E%3Cellipse cx='300' cy='32' rx='15' ry='0.7' fill='%23fff' fill-opacity='0.02'/%3E%3Cellipse cx='420' cy='19' rx='11' ry='0.4' fill='%23fff' fill-opacity='0.024'/%3E%3C/svg%3E"),
+                linear-gradient(to bottom, #f1caa3 0%, #f8d8af 8%, #f8d8af 92%, #f1caa3 100%);
+            background-size: 600px 36px, 100% 100%;
+        }
+        body:has(#t-desert-blood:checked) {
+            --background: #f8d8af; --surface: #f9dbb5; --border: #6f4f2e;
+            --text: #000000; --accent: #8d2b17; --glow: rgba(139, 90, 43, 0.15);
+            --surface-2: color-mix(in srgb, var(--surface) 85%, var(--background));
+            --divider: color-mix(in srgb, var(--border) 70%, var(--background));
+            background:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 600 36' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='1' width='600' height='0.4' fill='%23000' fill-opacity='0.018'/%3E%3Crect x='0' y='4' width='600' height='0.7' fill='%23000' fill-opacity='0.022'/%3E%3Crect x='0' y='7.5' width='600' height='0.3' fill='%23000' fill-opacity='0.012'/%3E%3Crect x='0' y='10' width='600' height='0.6' fill='%23000' fill-opacity='0.02'/%3E%3Crect x='0' y='14' width='600' height='0.5' fill='%23000' fill-opacity='0.025'/%3E%3Crect x='0' y='17' width='600' height='0.35' fill='%23000' fill-opacity='0.015'/%3E%3Crect x='0' y='20.5' width='600' height='0.8' fill='%23000' fill-opacity='0.018'/%3E%3Crect x='0' y='24' width='600' height='0.45' fill='%23000' fill-opacity='0.022'/%3E%3Crect x='0' y='27' width='600' height='0.6' fill='%23000' fill-opacity='0.014'/%3E%3Crect x='0' y='30.5' width='600' height='0.5' fill='%23000' fill-opacity='0.02'/%3E%3Crect x='0' y='34' width='600' height='0.35' fill='%23000' fill-opacity='0.016'/%3E%3Cellipse cx='40' cy='3' rx='18' ry='0.7' fill='%23000' fill-opacity='0.018'/%3E%3Cellipse cx='130' cy='8' rx='22' ry='0.5' fill='%23000' fill-opacity='0.015'/%3E%3Cellipse cx='250' cy='2' rx='14' ry='0.8' fill='%23000' fill-opacity='0.02'/%3E%3Cellipse cx='340' cy='12' rx='25' ry='0.6' fill='%23000' fill-opacity='0.016'/%3E%3Cellipse cx='480' cy='6' rx='16' ry='0.9' fill='%23000' fill-opacity='0.018'/%3E%3Cellipse cx='560' cy='15' rx='20' ry='0.5' fill='%23000' fill-opacity='0.014'/%3E%3Cellipse cx='85' cy='19' rx='24' ry='0.7' fill='%23000' fill-opacity='0.02'/%3E%3Cellipse cx='200' cy='23' rx='15' ry='0.6' fill='%23000' fill-opacity='0.017'/%3E%3Cellipse cx='370' cy='28' rx='28' ry='0.8' fill='%23000' fill-opacity='0.015'/%3E%3Cellipse cx='510' cy='21' rx='18' ry='0.5' fill='%23000' fill-opacity='0.019'/%3E%3Cellipse cx='440' cy='33' rx='21' ry='0.7' fill='%23000' fill-opacity='0.016'/%3E%3Cellipse cx='160' cy='31' rx='17' ry='0.6' fill='%23000' fill-opacity='0.018'/%3E%3Cellipse cx='70' cy='11' rx='13' ry='0.5' fill='%23fff' fill-opacity='0.022'/%3E%3Cellipse cx='210' cy='5' rx='16' ry='0.6' fill='%23fff' fill-opacity='0.018'/%3E%3Cellipse cx='350' cy='17' rx='12' ry='0.7' fill='%23fff' fill-opacity='0.025'/%3E%3Cellipse cx='490' cy='9' rx='19' ry='0.5' fill='%23fff' fill-opacity='0.02'/%3E%3Cellipse cx='550' cy='26' rx='14' ry='0.6' fill='%23fff' fill-opacity='0.018'/%3E%3Cellipse cx='120' cy='25' rx='17' ry='0.5' fill='%23fff' fill-opacity='0.022'/%3E%3Cellipse cx='300' cy='32' rx='15' ry='0.7' fill='%23fff' fill-opacity='0.02'/%3E%3Cellipse cx='420' cy='19' rx='11' ry='0.4' fill='%23fff' fill-opacity='0.024'/%3E%3C/svg%3E"),
+                linear-gradient(to bottom, #f1caa3 0%, #f8d8af 12%, #f8d8af 88%, #f1caa3 100%);
+            background-size: 600px 36px, 100% 100%;
+        }
+
+        /* ═══════════════════════════════════════════════
+           LAYOUT
+           ═══════════════════════════════════════════════ */
+
+        body {
+            font-family: 'Georgia', serif;
+            color: var(--text);
+            min-height: 100svh;
+        }
+
+        site-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100svh;
+        }
+
+        /* Header */
+        header {
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            & h1 {
+                font-size: 2rem;
+                margin-bottom: 4px;
+            }
+            & .subtitle {
+                font-style: italic;
+                opacity: 0.7;
+                font-size: 0.9rem;
+                margin-top: 8px;
+            }
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+            & a {
+                color: var(--accent);
+                text-decoration: none;
+                font-size: 0.95rem;
+                &:visited { color: var(--accent); }
+                &:hover { text-decoration: underline; }
+            }
+        }
+
+        /* Blog entries */
+        blog-feed {
+            display: block;
+        }
+
+        blog-entry {
+            display: block;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px var(--glow, transparent);
+            transition: opacity 0.4s ease, translate 0.4s ease;
+            opacity: 1;
+            translate: 0 0;
+            @starting-style {
+                opacity: 0;
+                translate: 0 8px;
+            }
+            & entry-header {
+                display: block;
+                margin-bottom: 12px;
+                & entry-date {
+                    display: block;
+                    font-size: 0.8rem;
+                    opacity: 0.5;
+                    font-family: monospace;
+                }
+            }
+            & entry-body {
+                display: block;
+                line-height: 1.7;
+                font-size: 1rem;
+                & p {
+                    margin-bottom: 0.6em;
+                    &:last-child { margin-bottom: 0; }
+                }
+            }
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            margin-top: auto;
+        }
+        .theme-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            & label {
+                font-weight: bold;
+                font-size: 0.9rem;
+            }
+            & select {
+                background-color: var(--surface);
+                color: var(--text);
+                border: 1px solid var(--border);
+                padding: 8px 12px;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                cursor: pointer;
+                font-family: inherit;
+            }
+        }
+        .footer-text {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <site-container>
+        <header>
+            <h1>RainbowCrash.lol</h1>
+            <div class="subtitle">I'm Rainbow Dash's Top Guy</div>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">whatever1</a>
+                <a href="#">nothingyet2</a>
+                <a href="#">lololol3</a>
+            </nav>
+        </header>
+
+        <blog-feed>
+
+            <blog-entry>
+                <entry-header>
+                    <entry-date>28/02/2026 &mdash; Pyrus</entry-date>
+                </entry-header>
+                <entry-body>
+                    <p>A very happy birthday to Light Yagami, the God of the New World.</p>
+                    <p>And a joyous start to WWIII Everypony.</p>
+                </entry-body>
+            </blog-entry>
+
+        </blog-feed>
+
+        <footer>
+            <div class="theme-selector">
+                <label for="theme-select">Theme:</label>
+                <select id="theme-select">
+                    <optgroup label="&#127880;">
+                        <option id="t-dashie" value="dashie" selected>Dashie</option>
+                        <option id="t-ponk" value="ponk">Ponk</option>
+                    </optgroup>
+                    <optgroup label="Rock Farm">
+                        <option id="t-limestone-dark" value="limestone-dark">Limestone &#9790;</option>
+                        <option id="t-limestone-light" value="limestone-light">Limestone &#9728;</option>
+                        <option id="t-maud-dark" value="maud-dark">Maud &#9790;</option>
+                        <option id="t-maud-light" value="maud-light">Maud &#9728;</option>
+                        <option id="t-marble-dark" value="marble-dark">Marble &#9790;</option>
+                        <option id="t-marble-light" value="marble-light">Marble &#9728;</option>
+                    </optgroup>
+                    <optgroup label="Desert Temple">
+                        <option id="t-desert-cactus" value="desert-cactus">Cactus</option>
+                        <option id="t-desert-blood" value="desert-blood">Blood</option>
+                    </optgroup>
+                    <optgroup label="Brutalist">
+                        <option id="t-brutalist-dark" value="brutalist-dark">Dark &#9790;</option>
+                        <option id="t-brutalist-light" value="brutalist-light">Light &#9728;</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="footer-text">
+                RainbowCrash.lol &copy; 2026 &bull; 20% cooler
+            </div>
+        </footer>
+    </site-container>
+
+    <!-- Progressive enhancement: persistence + party pop -->
+    <script>
+        const themeSelect = document.getElementById('theme-select');
+        const saved = localStorage.getItem('rc-theme');
+        if (saved) { const opt = document.getElementById(saved); if (opt) opt.selected = true; }
+        themeSelect.addEventListener('change', () => {
+            const sel = themeSelect.selectedOptions[0];
+            if (sel) localStorage.setItem('rc-theme', sel.id);
+        });
+
+        // Ponk party pop
+        let audioCtx = null;
+        function playPartyPop() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const ctx = audioCtx, now = ctx.currentTime;
+
+            // Noise burst (the "pop")
+            const noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 0.08, ctx.sampleRate);
+            const noiseData = noiseBuf.getChannelData(0);
+            for (let i = 0; i < noiseData.length; i++) noiseData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / noiseData.length, 3);
+            const noiseSrc = ctx.createBufferSource(); noiseSrc.buffer = noiseBuf;
+            const noiseGain = ctx.createGain(); noiseGain.gain.setValueAtTime(0.4, now); noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+            const noiseFilter = ctx.createBiquadFilter(); noiseFilter.type = 'bandpass'; noiseFilter.frequency.value = 2000; noiseFilter.Q.value = 0.8;
+            noiseSrc.connect(noiseFilter).connect(noiseGain).connect(ctx.destination); noiseSrc.start(now); noiseSrc.stop(now + 0.08);
+
+            // Descending chirp (the "wheee")
+            const osc = ctx.createOscillator(); osc.type = 'sine';
+            osc.frequency.setValueAtTime(1400, now); osc.frequency.exponentialRampToValueAtTime(400, now + 0.15);
+            const chirpGain = ctx.createGain(); chirpGain.gain.setValueAtTime(0.2, now); chirpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+            osc.connect(chirpGain).connect(ctx.destination); osc.start(now); osc.stop(now + 0.2);
+        }
+
+        let prevPonk = themeSelect.value === 'ponk';
+        themeSelect.addEventListener('change', () => {
+            const nowPonk = themeSelect.value === 'ponk';
+            if (nowPonk && !prevPonk) playPartyPop();
+            prevPonk = nowPonk;
+        });
+        if (prevPonk) document.addEventListener('click', () => playPartyPop(), { once: true });
+    </script>
+</body>
+</html>
