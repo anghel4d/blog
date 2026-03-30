@@ -33,12 +33,6 @@
 
   #main { padding: 13px; overflow-x: auto; }
 
-  #search-bar { display: flex; gap: 8px; align-items: center; border: 2px solid #000; padding: 5px; margin-bottom: 8px; }
-  #search-bar label { font-size: 11px; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
-  #search-input { font-size: 12px; border: 1px solid #000; padding: 2px 4px; flex: 1; outline: none; }
-  #search-input:focus { border: 2px solid #000; }
-  .search-btn { font-size: 11px; background: #000; color: #fff; border: none; padding: 2px 10px; cursor: pointer; text-transform: uppercase; }
-  .search-btn:hover { background: #666; }
 
   /* NOW-ENTRY banner */
   .now-banner { border: 2px solid #000; background: #000; color: #fff; padding: 5px 8px; font-size: 11px; margin-bottom: 13px; display: flex; justify-content: space-between; align-items: center; }
@@ -65,6 +59,11 @@
   .role-body { padding: 8px; display: none; }
   .role-body.open { display: block; }
 
+
+  /* WHV-compatible roles */
+  .role-node.whv-ok .rtitle::before { content: "◆ WHV "; font-size: 9px; color: #fff; background: #555; padding: 0 4px; margin-right: 6px; vertical-align: middle; }
+  .whv-tag { font-size: 10px; background: #555; color: #fff; padding: 0 5px; display: inline-block; margin-bottom: 5px; margin-right: 4px; }
+  .sub-role.whv-sub .sname::before { content: "◆ "; color: #555; }
   /* NOW entry highlight on role node */
   .role-node.now-entry { border: 2px solid #000; border-left: 5px solid #000; }
   .role-node.now-entry .rtitle::after { content: " ◄ NOW"; font-size: 9px; color: #fff; background: #000; padding: 0 4px; margin-left: 6px; vertical-align: middle; }
@@ -129,11 +128,71 @@
   .pnow td:first-child { border-left: 4px solid #000; }
 
   #footer { border-top: 3px solid #000; padding: 8px; font-size: 10px; color: #666; display: flex; justify-content: space-between; }
-  .highlight { background: yellow; }
 
   /* Factorio translation table */
   .factorio-table th { background: #333; }
   .factorio-table td:first-child { font-style: italic; color: #444; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    #masthead {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    #masthead .meta {
+      border-left: none;
+      border-top: 1px solid #000;
+      padding-left: 0;
+      padding-top: 8px;
+    }
+    #layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+    }
+    #sidebar {
+      position: static;
+      height: auto;
+      border-right: none;
+      border-bottom: 2px solid #000;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      padding: 6px 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+    }
+    #sidebar h2 {
+      width: 100%;
+      margin-bottom: 4px;
+    }
+    .toc-btn {
+      display: inline-block;
+      width: auto;
+      white-space: nowrap;
+      font-size: 11px;
+      padding: 3px 6px;
+      border: 1px solid #ccc;
+      border-left: 3px solid transparent;
+    }
+    .toc-btn.hot {
+      border: 1px solid #000;
+      border-left: 3px solid #000;
+    }
+    .toc-sub, .toc-hot { padding-left: 6px; }
+    hr.div { display: none; }
+    .const-block { display: none; }
+    #sidebar > .sidebar-label { display: none; }
+    #sidebar > div[style] { display: none; }
+    #main { padding: 8px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .rpay-cell { min-width: 90px; font-size: 10px; }
+    .rexp-cell { min-width: 44px; min-height: 44px; font-size: 16px; }
+    .branch-header { font-size: 12px; padding: 8px; }
+    .now-banner { flex-direction: column; gap: 5px; }
+    #masthead h1 { font-size: 13px; }
+    #footer { flex-direction: column; gap: 4px; }
+  }
 </style>
 </head>
 <body>
@@ -205,6 +264,7 @@
     <span style="background:#000;color:#fff;padding:0 3px;">IT</span> CompSci crossover<br>
     <span style="background:#333;color:#fff;padding:0 3px;">C</span> C/systems programming advantage<br>
     <span class="flag-tag">!</span> screen-heavy / flag eye<br>
+    <span style="background:#555;color:#fff;padding:0 3px;">◆ WHV</span> labour hire / casual / project-based<br>
     ↗ cross-tree reference link<br>
     ◈ convergence node<br>
     ★ priority branch
@@ -213,11 +273,7 @@
 
 <div id="main">
 
-  <div id="search-bar">
-    <label>Search:</label>
-    <input type="text" id="search-input" placeholder="role, ticket, company, technology..." onkeyup="doSearch(event)">
-    <button class="search-btn" onclick="clearSearch()">Clear</button>
-  </div>
+
 
   <div class="now-banner">
     <div><b>★ PRIORITY BRANCHES: Ω5 (Field Automation) and Ω6 (Mining Automation)</b> — the hard intersection of nerd and brawn. Early entry points marked ◄ NOW throughout. Eye-safe, Perth-entry, immediate.</div>
@@ -231,7 +287,7 @@
   <div class="branch-section" id="b5">
     <div class="branch-header hot-branch" onclick="tog('bc5')">
       <span>★ Ω5 · Field Automation Technician <span class="dtag">depth ×e⁵</span></span>
-      <span class="pay-badge">$35–70/hr · THE NERD/BRAWN INTERSECTION</span>
+      <span class="pay-badge">$55–90/hr · THE NERD/BRAWN INTERSECTION</span>
     </div>
     <div class="branch-body" id="bc5">
 
@@ -240,13 +296,13 @@
       </div>
 
       <!-- 5.1 INSTRUMENTATION TECH -->
-      <div class="role-node now-entry" id="b5-inst">
+      <div class="role-node now-entry whv-ok" id="b5-inst">
         <div class="role-node-header" onclick="togR('r5-1')">
           <div class="rtitle-cell">
             <div class="rtitle">5.1 — Instrumentation Technician</div>
             <div class="rsub">Sensors · Transmitters · Control Valves · Calibration · P&ID · Eye-safe physical work</div>
           </div>
-          <div class="rpay-cell">$38–58/hr<div class="rpay-sub">$75–110k · TAFE entry</div></div>
+          <div class="rpay-cell">$55–80/hr<div class="rpay-sub">$110–155k · TAFE entry</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r5-1">
@@ -278,20 +334,20 @@
           <p style="font-size:11px;line-height:1.5;margin-bottom:8px;">Instrumentation increasingly uses HART — Highway Addressable Remote Transducer — and Foundation Fieldbus protocols. Digital instrument configuration, asset management software (AMS Device Manager, FieldCare), and FOUNDATION Fieldbus diagnostics are all areas where IT comprehension accelerates you past trade-background techs who treat the device as a black box.</p>
           <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
 
-            <div class="sub-role now-sub"><div class="sub-role-header" onclick="togS('s5-instlead')"><div class="sname"><span class="arr">→</span>Senior Instrumentation Technician <span class="dtag">L2</span></div><div class="spay">2–3 yrs · $55–70/hr</div><div class="stoggle">+</div></div>
+            <div class="sub-role now-sub"><div class="sub-role-header" onclick="togS('s5-instlead')"><div class="sname"><span class="arr">→</span>Senior Instrumentation Technician <span class="dtag">L2</span></div><div class="spay">2–3 yrs · $70–90/hr</div><div class="stoggle">+</div></div>
               <div class="sub-body" id="s5-instlead"><p>Lead calibration programmes, mentor juniors, complex fault diagnosis. Often responsible for instrument asset management database.</p>
                 <div class="l2">
-                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-insteng')"><div class="sname"><span class="arr">→</span>Instrumentation Engineer <span class="dtag">L3</span></div><div class="spay">3–5 yrs · $90–130k</div><div class="stoggle">+</div></div>
+                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-insteng')"><div class="sname"><span class="arr">→</span>Instrumentation Engineer <span class="dtag">L3</span></div><div class="spay">3–5 yrs · $115–160k</div><div class="stoggle">+</div></div>
                     <div class="sub-body" id="s5-insteng"><p>Design and specification of instrument systems for new projects. P&ID development, instrument data sheets, hazardous area classification. Degree or extensive experience pathway. CompSci DEC + field experience is a valid route via RPL — Recognition of Prior Learning.</p>
                       <a class="xref" href="#b5-plc">see Ω5.3 PLC Commissioning — natural co-specialisation</a>
                       <div class="l3">
-                        <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-funcspec')"><div class="sname"><span class="arr">→</span>Functional Safety Engineer — IEC 61511 <span class="dtag">L4</span></div><div class="spay">$120–160k · TÜV cert</div><div class="stoggle">+</div></div>
+                        <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-funcspec')"><div class="sname"><span class="arr">→</span>Functional Safety Engineer — IEC 61511 <span class="dtag">L4</span></div><div class="spay">$150–200k · TÜV cert</div><div class="stoggle">+</div></div>
                           <div class="sub-body" id="s5-funcspec"><p>SIS — Safety Instrumented System — design and verification. IEC 61511 standard. TÜV Rheinland certification is the global credential. Extremely scarce. Mining and oil &amp; gas pay top dollar. Perth's resources sector has chronic shortage of certified functional safety engineers.</p></div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-analyser')"><div class="sname"><span class="arr">→</span>Analyser Technician <span class="dtag">L3</span></div><div class="spay">$60–80/hr · High niche value</div><div class="stoggle">+</div></div>
+                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-analyser')"><div class="sname"><span class="arr">→</span>Analyser Technician <span class="dtag">L3</span></div><div class="spay">$75–100/hr · High niche value</div><div class="stoggle">+</div></div>
                     <div class="sub-body" id="s5-analyser"><p>Specialisation in process analysers — gas chromatographs, spectrometers, online analysers. One of the higher-paid instrumentation niches. Analyser techs are genuinely scarce. Understanding of analytical chemistry + instrumentation electronics + calibration protocols. CompSci background helps with the data interpretation and configuration layers.</p></div>
                   </div>
                 </div>
@@ -309,7 +365,7 @@
             <div class="rtitle">5.2 — Field Service Technician (Automation Vendor)</div>
             <div class="rsub">Emerson · Honeywell · ABB · Siemens · Yokogawa · On-site commissioning · Fault diagnosis</div>
           </div>
-          <div class="rpay-cell">$42–65/hr<div class="rpay-sub">$85–120k + travel</div></div>
+          <div class="rpay-cell">$58–85/hr<div class="rpay-sub">$115–165k + travel</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r5-2">
@@ -343,19 +399,19 @@
           </div>
           <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
 
-            <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-srfst')"><div class="sname"><span class="arr">→</span>Senior Field Service Technician <span class="dtag">L2</span></div><div class="spay">2–4 yrs · $65–85/hr</div><div class="stoggle">+</div></div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-srfst')"><div class="sname"><span class="arr">→</span>Senior Field Service Technician <span class="dtag">L2</span></div><div class="spay">2–4 yrs · $80–110/hr</div><div class="stoggle">+</div></div>
               <div class="sub-body" id="s5-srfst"><p>Lead commissioning projects, manage junior techs on site, interface directly with client engineering teams. Often the person the mine calls at 2am when the DCS fails during a shutdown.</p>
                 <div class="l2">
-                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-syseng')"><div class="sname"><span class="arr">→</span>Systems / Applications Engineer <span class="dtag">L3</span></div><div class="spay">4–6 yrs · $100–140k</div><div class="stoggle">+</div></div>
+                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-syseng')"><div class="sname"><span class="arr">→</span>Systems / Applications Engineer <span class="dtag">L3</span></div><div class="spay">4–6 yrs · $155–200k</div><div class="stoggle">+</div></div>
                     <div class="sub-body" id="s5-syseng"><p>Technical design authority for a DCS platform. Develops standard configurations, application code libraries, best practices. The role where C background and systems thinking become directly applicable to industrial automation. <a class="xref" href="#b6-csw">see Ω6.3 Controls Software Engineer</a></p>
                       <div class="l3">
-                        <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-solarch')"><div class="sname"><span class="arr">→</span>Automation Solutions Architect <span class="dtag">L4</span></div><div class="spay">$130–180k · Pre-sales + delivery</div><div class="stoggle">+</div></div>
+                        <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-solarch')"><div class="sname"><span class="arr">→</span>Automation Solutions Architect <span class="dtag">L4</span></div><div class="spay">$160–210k · Pre-sales + delivery</div><div class="stoggle">+</div></div>
                           <div class="sub-body" id="s5-solarch"><p>Designs complete automation solutions for major capital projects. Pre-sales technical authority + delivery oversight. Works across hardware, software, networking, and process. The most senior individual contributor role in the automation vendor world. CompSci DEC + physical site experience + systems engineering = the full profile.</p></div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-prodspec')"><div class="sname"><span class="arr">→</span>Product Specialist / Technical Consultant <span class="dtag">L3</span></div><div class="spay">$110–150k · Global travel</div><div class="stoggle">+</div></div>
+                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-prodspec')"><div class="sname"><span class="arr">→</span>Product Specialist / Technical Consultant <span class="dtag">L3</span></div><div class="spay">$165–210k · Global travel</div><div class="stoggle">+</div></div>
                     <div class="sub-body" id="s5-prodspec"><p>Deep expertise in one vendor platform, deployed globally on major projects. Emerson, Honeywell, ABB all have these roles. Perth-based but travelling to major projects in WA, NT, QLD, and internationally. High compensation, genuinely elite technical work.</p></div>
                   </div>
                 </div>
@@ -367,13 +423,13 @@
       </div>
 
       <!-- 5.3 PLC COMMISSIONING TECH -->
-      <div class="role-node now-entry" id="b5-plc">
+      <div class="role-node now-entry whv-ok" id="b5-plc">
         <div class="role-node-header" onclick="togR('r5-3')">
           <div class="rtitle-cell">
             <div class="rtitle">5.3 — PLC Commissioning Technician</div>
             <div class="rsub">Panel Wiring · Field Commissioning · Loop Check · Rockwell · Siemens · Physical + Technical</div>
           </div>
-          <div class="rpay-cell">$40–60/hr<div class="rpay-sub">$80–110k</div></div>
+          <div class="rpay-cell">$55–80/hr<div class="rpay-sub">$110–155k</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r5-3">
@@ -406,10 +462,10 @@
           </div>
           <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
 
-            <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-plclead')"><div class="sname"><span class="arr">→</span>Lead Commissioning Technician <span class="dtag">L2</span></div><div class="spay">2–3 yrs · $55–70/hr</div><div class="stoggle">+</div></div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-plclead')"><div class="sname"><span class="arr">→</span>Lead Commissioning Technician <span class="dtag">L2</span></div><div class="spay">2–3 yrs · $70–95/hr</div><div class="stoggle">+</div></div>
               <div class="sub-body" id="s5-plclead"><p>Runs commissioning projects end-to-end. Writes loop check sheets, manages commissioning database, coordinates between electrical, instrumentation, and process teams.</p>
                 <div class="l2">
-                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-plceng')"><div class="sname"><span class="arr">→</span>PLC / Controls Engineer <span class="dtag">L3</span></div><div class="spay">3–6 yrs · $90–130k</div><div class="stoggle">+</div></div>
+                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-plceng')"><div class="sname"><span class="arr">→</span>PLC / Controls Engineer <span class="dtag">L3</span></div><div class="spay">3–6 yrs · $115–160k</div><div class="stoggle">+</div></div>
                     <div class="sub-body" id="s5-plceng"><p>Writes the actual control logic — not just commissions it. Designs state machines, safety interlock logic, sequence control, PID loop tuning. This is where C programming background becomes a genuine structural advantage over electrical trade-background engineers.</p>
                       <a class="xref" href="#b6-csw">see Ω6.3 Controls Software Engineer — direct continuation</a>
                       <a class="xref" href="#b5-fst">see Ω5.2 Field Service Tech — parallel career path</a>
@@ -430,7 +486,7 @@
             <div class="rtitle">5.4 — OT Network Technician</div>
             <div class="rsub">Industrial Networking · Profinet · EtherNet/IP · Modbus · OT/IT Convergence · Purdue Model</div>
           </div>
-          <div class="rpay-cell">$45–65/hr<div class="rpay-sub">$85–120k · Scarce skill</div></div>
+          <div class="rpay-cell">$60–90/hr<div class="rpay-sub">$120–175k · Scarce skill</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r5-4">
@@ -464,17 +520,17 @@
           </div>
           <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
 
-            <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-otsec')"><div class="sname"><span class="arr">→</span>OT Cybersecurity Specialist <span class="dtag">L2</span></div><div class="spay">$90–130k · Fastest growing niche</div><div class="stoggle">+</div></div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-otsec')"><div class="sname"><span class="arr">→</span>OT Cybersecurity Specialist <span class="dtag">L2</span></div><div class="spay">$120–180k · Fastest growing niche</div><div class="stoggle">+</div></div>
               <div class="sub-body" id="s5-otsec"><p>Securing industrial control systems against cyber threats. Government mandated in critical infrastructure. Mining, utilities, oil &amp; gas all have significant compliance requirements under SOCI — Security of Critical Infrastructure Act. Perth has almost no qualified OT security specialists. This is one of the most undersupplied skills in WA's industrial sector.</p>
                 <div class="l2">
-                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-otarchitect')"><div class="sname"><span class="arr">→</span>OT/ICS Security Architect <span class="dtag">L3</span></div><div class="spay">$130–180k · Contract $200+/hr</div><div class="stoggle">+</div></div>
+                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-otarchitect')"><div class="sname"><span class="arr">→</span>OT/ICS Security Architect <span class="dtag">L3</span></div><div class="spay">$180–240k · Contract $250+/hr</div><div class="stoggle">+</div></div>
                     <div class="sub-body" id="s5-otarchitect"><p>Designing security architectures for industrial control systems. Works across network segmentation, asset inventory, vulnerability management, incident response. Contract consulting rates are extreme because the skill is so rare. CompSci DEC + OT networking + physical site experience = the complete profile.</p></div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-opcua')"><div class="sname"><span class="arr">→</span>OPC-UA / Industrial Integration Specialist <span class="dtag">L2</span></div><div class="spay">$85–120k · IT crossover</div><div class="stoggle">+</div></div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s5-opcua')"><div class="sname"><span class="arr">→</span>OPC-UA / Industrial Integration Specialist <span class="dtag">L2</span></div><div class="spay">$110–155k · IT crossover</div><div class="stoggle">+</div></div>
               <div class="sub-body" id="s5-opcua"><p>OPC-UA — OPC Unified Architecture — is the standard for industrial data exchange. Integrating PLCs, DCS, historians, ERP systems, and cloud platforms via OPC-UA is increasingly critical infrastructure work. Python + OPC-UA libraries (opcua-asyncio) is a real-world skill stack.</p>
                 <a class="xref" href="#b6-roc">see Ω6.2 Remote Operations Tech — OPC-UA feeds remote ops data</a>
               </div>
@@ -494,7 +550,7 @@
   <div class="branch-section" id="b6">
     <div class="branch-header hot-branch" onclick="tog('bc6')">
       <span>★ Ω6 · Mining Automation & Autonomous Systems <span class="dtag">depth ×e⁶</span></span>
-      <span class="pay-badge">$50–90/hr · Where Perth leads the world</span>
+      <span class="pay-badge">$60–100/hr · Where Perth leads the world</span>
     </div>
     <div class="branch-body" id="bc6">
 
@@ -509,7 +565,7 @@
             <div class="rtitle">6.1 — Autonomous Equipment Field Technician</div>
             <div class="rsub">RCT Automation · Epiroc · Sandvik · Caterpillar · On-site Deployment · Commissioning · Maintenance</div>
           </div>
-          <div class="rpay-cell">$45–70/hr<div class="rpay-sub">$90–130k + site allowances</div></div>
+          <div class="rpay-cell">$58–85/hr<div class="rpay-sub">$115–165k + site allowances</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r6-1">
@@ -543,14 +599,14 @@
           </div>
           <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
 
-            <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-autonomylead')"><div class="sname"><span class="arr">→</span>Autonomy Systems Lead Technician <span class="dtag">L2</span></div><div class="spay">2–3 yrs · $65–80/hr</div><div class="stoggle">+</div></div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-autonomylead')"><div class="sname"><span class="arr">→</span>Autonomy Systems Lead Technician <span class="dtag">L2</span></div><div class="spay">2–3 yrs · $80–110/hr</div><div class="stoggle">+</div></div>
               <div class="sub-body" id="s6-autonomylead"><p>Technical lead on autonomous fleet deployments. Responsible for system performance, fault resolution, customer technical interface. Often the most technically capable person on a mine site deployment.</p>
                 <div class="l2">
                   <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-atseng')"><div class="sname"><span class="arr">→</span>Autonomous Systems Engineer <span class="dtag">L3</span></div><div class="spay">$110–150k</div><div class="stoggle">+</div></div>
                     <div class="sub-body" id="s6-atseng"><p>Engineering development of autonomous systems — sensor integration, perception algorithms, localisation, path planning. Where the C background becomes central rather than supplementary. Perth-based R&D roles exist at RCT, Caterpillar, and Fortescue's own technology division.</p>
                       <a class="xref" href="#b6-emb">see Ω6.4 Embedded Systems — parallel technical depth</a>
                       <div class="l3">
-                        <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-autonomyarch')"><div class="sname"><span class="arr">→</span>Autonomy Architecture Lead <span class="dtag">L4</span></div><div class="spay">$150–200k+</div><div class="stoggle">+</div></div>
+                        <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-autonomyarch')"><div class="sname"><span class="arr">→</span>Autonomy Architecture Lead <span class="dtag">L4</span></div><div class="spay">$180–230k+</div><div class="stoggle">+</div></div>
                           <div class="sub-body" id="s6-autonomyarch"><p>Technical authority for an autonomous fleet product. Defines the system architecture, sensor suite, software stack, and integration standards. The Factorio factory designer role, for real mining equipment. Limited supply of people globally who combine embedded systems depth, physical mining experience, and system design capability.</p></div>
                         </div>
                       </div>
@@ -600,11 +656,11 @@
           </div>
           <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
 
-            <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-roceng')"><div class="sname"><span class="arr">→</span>ROC Systems Engineer <span class="dtag">L2</span></div><div class="spay">$95–130k · IT crossover</div><div class="stoggle">+</div></div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-roceng')"><div class="sname"><span class="arr">→</span>ROC Systems Engineer <span class="dtag">L2</span></div><div class="spay">$150–190k · IT crossover</div><div class="stoggle">+</div></div>
               <div class="sub-body" id="s6-roceng"><p>Designs and maintains the systems architecture of a Remote Operations Centre — SCADA platforms, data historians, network infrastructure, display systems, integration with autonomous fleet management software.</p>
                 <a class="xref" href="#b5-otn">see Ω5.4 OT Network Tech — OT/IT convergence is central here</a>
                 <div class="l2">
-                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-digitalmine')"><div class="sname"><span class="arr">→</span>Digital Mine / Smart Mine Engineer <span class="dtag">L3</span></div><div class="spay">$120–160k · BHP/Rio/FMG</div><div class="stoggle">+</div></div>
+                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-digitalmine')"><div class="sname"><span class="arr">→</span>Digital Mine / Smart Mine Engineer <span class="dtag">L3</span></div><div class="spay">$145–185k · BHP/Rio/FMG</div><div class="stoggle">+</div></div>
                     <div class="sub-body" id="s6-digitalmine"><p>Designs and implements the integrated digital systems of a modern mine — autonomous equipment, real-time data platforms, predictive maintenance systems, optimisation algorithms. BHP calls this their "Data and Analytics" function. Rio calls it "Operations Technology". Fortescue has a dedicated technology division. All hire heavily in Perth. The Factorio brain applied to mining operations at scale.</p>
                       <div class="l3">
                         <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-futuremine')"><div class="sname"><span class="arr">→</span>Mine of the Future Programme Lead <span class="dtag">L4</span></div><div class="spay">$160–220k</div><div class="stoggle">+</div></div>
@@ -628,7 +684,7 @@
             <div class="rtitle">6.3 — Controls Software Engineer</div>
             <div class="rsub">PLC Logic · SCADA Development · State Machines · Safety Interlocks · C/ST · IEC 61131-3</div>
           </div>
-          <div class="rpay-cell">$90–140k<div class="rpay-sub">Contract: $100–160/hr</div></div>
+          <div class="rpay-cell">$120–170k<div class="rpay-sub">Contract: $130–190/hr</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r6-3">
@@ -669,7 +725,7 @@
             <div class="rtitle">6.4 — Embedded Systems Engineer / Firmware Developer</div>
             <div class="rsub">C/C++ · Bare-metal · RTOS · Sensor Integration · Autonomous Vehicle Control Firmware</div>
           </div>
-          <div class="rpay-cell">$100–160k<div class="rpay-sub">Contract: $120–200/hr</div></div>
+          <div class="rpay-cell">$125–185k<div class="rpay-sub">Contract: $150–220/hr</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r6-4">
@@ -705,11 +761,11 @@
             <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-embsr')"><div class="sname"><span class="arr">→</span>Senior Embedded / Firmware Engineer <span class="dtag">L2</span></div><div class="spay">$130–170k</div><div class="stoggle">+</div></div>
               <div class="sub-body" id="s6-embsr"><p>Technical authority for an embedded platform. Defines architecture, reviews code, sets standards. Mentors juniors. Often the best-paid individual contributor in a mining technology company.</p>
                 <div class="l2">
-                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-safetyfirmware')"><div class="sname"><span class="arr">→</span>Safety-Critical Firmware Engineer — IEC 61508 <span class="dtag">L3</span></div><div class="spay">$140–180k · Extremely scarce</div><div class="stoggle">+</div></div>
+                  <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-safetyfirmware')"><div class="sname"><span class="arr">→</span>Safety-Critical Firmware Engineer — IEC 61508 <span class="dtag">L3</span></div><div class="spay">$170–220k · Extremely scarce</div><div class="stoggle">+</div></div>
                     <div class="sub-body" id="s6-safetyfirmware"><p>Writes firmware for safety-critical systems — autonomous vehicle emergency stops, safety controllers, SIL — Safety Integrity Level — rated systems. IEC 61508 standard. Global shortage of engineers who can do this. Perth's autonomous mining industry needs them. This is the highest technical ceiling in this entire dossier.</p>
                       <a class="xref" href="#b5-inst">see Ω5.1 Instrumentation Tech — IEC 61511 functional safety is the field-side equivalent</a>
                       <div class="l3">
-                        <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-principaleng')"><div class="sname"><span class="arr">→</span>Principal Engineer — Autonomous Systems <span class="dtag">L4</span></div><div class="spay">$180–250k+ · Rare</div><div class="stoggle">+</div></div>
+                        <div class="sub-role"><div class="sub-role-header" onclick="togS('s6-principaleng')"><div class="sname"><span class="arr">→</span>Principal Engineer — Autonomous Systems <span class="dtag">L4</span></div><div class="spay">$200–280k+ · Rare</div><div class="stoggle">+</div></div>
                           <div class="sub-body" id="s6-principaleng"><p>The technical apex of autonomous mining technology. Defines the engineering standards for safety-critical autonomous systems. Works at the intersection of functional safety, embedded software, systems engineering, and mining operations. A handful of people in WA hold this profile. That number is growing as the autonomous mining industry matures. The pipeline starts with the physical site work and the C skills you already have.</p></div>
                         </div>
                       </div>
@@ -784,16 +840,16 @@
   <div class="branch-section" id="b1">
     <div class="branch-header" onclick="tog('bc1')">
       <span>Ω1 · Communications Rigger <span class="dtag">depth ×e¹</span></span>
-      <span class="pay-badge">$35–55/hr · $90–110k</span>
+      <span class="pay-badge">$45–68/hr · $110–135k</span>
     </div>
     <div class="branch-body collapsed" id="bc1">
 
       <div style="font-size:11px;border-left:3px solid #000;padding-left:8px;margin-bottom:8px;">Cross-reference: Comms rigging overlaps with <a href="#b5-otn">Ω5.4 OT Network Tech</a> (industrial wireless infrastructure on mine sites) and <a href="#b5-inst">Ω5.1 Instrumentation Tech</a> (sensor mounting and cabling). The RF Technician branch (Ω1.3) feeds directly into automation vendor roles at <a href="#b5-fst">Ω5.2</a>.</div>
 
-      <div class="role-node now-entry" id="b1-th">
+      <div class="role-node now-entry whv-ok" id="b1-th">
         <div class="role-node-header" onclick="togR('r1-1')">
           <div class="rtitle-cell"><div class="rtitle">1.1 — Tower Hand / Tower Technician</div><div class="rsub">Entry · Working at Heights + White Card · 2 weeks to employment</div></div>
-          <div class="rpay-cell">$28–42/hr<div class="rpay-sub">Entry level</div></div>
+          <div class="rpay-cell">$36–52/hr<div class="rpay-sub">Entry level</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r1-1">
@@ -810,10 +866,10 @@
         </div>
       </div>
 
-      <div class="role-node" id="b1-sr">
+      <div class="role-node whv-ok" id="b1-sr">
         <div class="role-node-header" onclick="togR('r1-2')">
           <div class="rtitle-cell"><div class="rtitle">1.2 — Structural Rigger</div><div class="rsub">RB/RI/RA · Construction · Industrial · Crane Coordination</div></div>
-          <div class="rpay-cell">$38–58/hr<div class="rpay-sub">RI adds $5–8/hr</div></div>
+          <div class="rpay-cell">$48–68/hr<div class="rpay-sub">RI adds $5–8/hr</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r1-2">
@@ -829,7 +885,7 @@
       <div class="role-node" id="b1-rf">
         <div class="role-node-header" onclick="togR('r1-3')">
           <div class="rtitle-cell"><div class="rtitle">1.3 — RF / Antenna Technician</div><div class="rsub">Spectrum Analysis · PIM Testing · LTE · 5G NR · CompSci Direct Advantage</div></div>
-          <div class="rpay-cell">$45–70/hr<div class="rpay-sub">$90–130k</div></div>
+          <div class="rpay-cell">$52–80/hr<div class="rpay-sub">$105–155k</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r1-3">
@@ -848,16 +904,16 @@
   <div class="branch-section" id="b2">
     <div class="branch-header" onclick="tog('bc2')">
       <span>Ω2 · Stevedore <span class="dtag">depth ×e²</span></span>
-      <span class="pay-badge">$40–65/hr · MUA Protected · MSIC Critical</span>
+      <span class="pay-badge">$50–72/hr · MUA Protected · MSIC Critical</span>
     </div>
     <div class="branch-body collapsed" id="bc2">
 
       <div style="font-size:11px;border-left:3px solid #000;padding-left:8px;margin-bottom:8px;">Port automation crossover: Fremantle terminal automation (RTG cranes, TOS) feeds directly into <a href="#b5-fst">Ω5.2 Field Service Tech</a> and <a href="#b6-roc">Ω6.2 Remote Operations</a>. The Terminal Systems Analyst node is a direct convergence with <a href="#b5-otn">Ω5.4 OT Network</a>.</div>
 
-      <div class="role-node now-entry" id="b2-core">
+      <div class="role-node now-entry whv-ok" id="b2-core">
         <div class="role-node-header" onclick="togR('r2m')">
           <div class="rtitle-cell"><div class="rtitle">Stevedore — Core Role</div><div class="rsub">Fremantle (DP World) · Kwinana Bulk (Qube) · MSIC Day One</div></div>
-          <div class="rpay-cell">$40–65/hr<div class="rpay-sub">+ shift penalties</div></div>
+          <div class="rpay-cell">$50–72/hr<div class="rpay-sub">+ shift penalties</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r2m">
@@ -872,7 +928,7 @@
       <div class="role-node" id="b2-pe">
         <div class="role-node-header" onclick="togR('r2-1')">
           <div class="rtitle-cell"><div class="rtitle">2.1 — Port Equipment Operator → Terminal Systems Analyst ◈</div><div class="rsub">Straddle · RTG · STS · Automation Crossover</div></div>
-          <div class="rpay-cell">$48–75/hr → $90–120k<div class="rpay-sub">Convergence node</div></div>
+          <div class="rpay-cell">$58–85/hr → $120–160k<div class="rpay-sub">Convergence node</div></div>
           <div class="rexp-cell">+</div>
         </div>
         <div class="role-body" id="r2-1">
@@ -888,13 +944,13 @@
   <div class="branch-section" id="b3">
     <div class="branch-header" onclick="tog('bc3')">
       <span>Ω3 · Heavy Forklift Operator <span class="dtag">depth ×e³</span></span>
-      <span class="pay-badge">$30–42/hr · Fastest Perth cash flow · LF licence Day One</span>
+      <span class="pay-badge">$38–52/hr · Fastest Perth cash flow · LF licence Day One</span>
     </div>
     <div class="branch-body collapsed" id="bc3">
 
       <div style="font-size:11px;border-left:3px solid #000;padding-left:8px;margin-bottom:8px;">Primary value in this dossier: fastest path to Perth cash flow while ticket-stacking and self-studying. LF licence Day One, labour hire placement within days. WMS Superuser node crosses into <a href="#b5-fst">Ω5.2</a> and <a href="#b6-roc">Ω6.2</a> — warehouse and logistics automation is growing rapidly in Perth.</div>
 
-      <div class="role-node now-entry" id="b3-core"><div class="role-node-header" onclick="togR('r3m')"><div class="rtitle-cell"><div class="rtitle">Heavy Forklift — Core Role</div><div class="rsub">Kewdale/Welshpool · LF licence Day One · Labour hire within days</div></div><div class="rpay-cell">$30–42/hr<div class="rpay-sub">LF Day One</div></div><div class="rexp-cell">+</div></div>
+      <div class="role-node now-entry whv-ok" id="b3-core"><div class="role-node-header" onclick="togR('r3m')"><div class="rtitle-cell"><div class="rtitle">Heavy Forklift — Core Role</div><div class="rsub">Kewdale/Welshpool · LF licence Day One · Labour hire within days</div></div><div class="rpay-cell">$38–52/hr<div class="rpay-sub">LF Day One</div></div><div class="rexp-cell">+</div></div>
         <div class="role-body" id="r3m">
           <div class="rdesc">Primary strategic value: fastest Perth cash flow. LF forklift licence one day, $300–500, same-day card. Labour hire placement within days at WorkPac/Programmed/Adecco/Chandler Macleod/Hays. Burns no WHV days unnecessarily. Funds parallel ticket-stacking and self-study.</div>
           <div class="info-grid">
@@ -904,7 +960,7 @@
         </div>
       </div>
 
-      <div class="role-node" id="b3-rt"><div class="role-node-header" onclick="togR('r3-1')"><div class="rtitle-cell"><div class="rtitle">3.1 — Reach Truck / VNA → WMS Superuser → SC Technology Director ◈</div><div class="rsub">$35–48/hr → $75–250k</div></div><div class="rpay-cell">$35–48/hr</div><div class="rexp-cell">+</div></div><div class="role-body" id="r3-1"><div class="rdesc">High-bay racking, cold storage premium. WMS Superuser crossover (Manhattan, SAP EWM) is the IT-physical convergence node in this branch. WMS Implementation Consultant → SC Technology Director ◈ is the terminal convergence. <a href="#conv">See Convergence Nodes.</a></div></div></div>
+      <div class="role-node" id="b3-rt"><div class="role-node-header" onclick="togR('r3-1')"><div class="rtitle-cell"><div class="rtitle">3.1 — Reach Truck / VNA → WMS Superuser → SC Technology Director ◈</div><div class="rsub">$42–58/hr → $90–250k</div></div><div class="rpay-cell">$42–58/hr</div><div class="rexp-cell">+</div></div><div class="role-body" id="r3-1"><div class="rdesc">High-bay racking, cold storage premium. WMS Superuser crossover (Manhattan, SAP EWM) is the IT-physical convergence node in this branch. WMS Implementation Consultant → SC Technology Director ◈ is the terminal convergence. <a href="#conv">See Convergence Nodes.</a></div></div></div>
       <div class="role-node" id="b3-ys"><div class="role-node-header" onclick="togR('r3-2')"><div class="rtitle-cell"><div class="rtitle">3.2 — Yard Supervisor → Transport Technology Manager</div><div class="rsub">$65–130k range · Transport planner <span class="flag-tag">!</span></div></div><div class="rpay-cell">$65–130k</div><div class="rexp-cell">+</div></div><div class="role-body" id="r3-2"><div class="rdesc">Transport planning is screen-heavy — flag. Transport Technology Manager (telematics, fleet management platforms) is an IT-logistics hybrid with manageable screen intensity. Cross-reference <a href="#b6-roc">Ω6.2 Remote Operations</a> — remote fleet management at mine sites is conceptually adjacent.</div></div></div>
       <div class="role-node" id="b3-cl"><div class="role-node-header" onclick="togR('r3-3')"><div class="rtitle-cell"><div class="rtitle">3.3 — Container Logistics Operative → Shipping Line Ops</div><div class="rsub">$35–100k range</div></div><div class="rpay-cell">$35–50/hr</div><div class="rexp-cell">+</div></div><div class="role-body" id="r3-3"><div class="rdesc">Container parks, empty depots, freight stations. Container Inspector → Shipping Line Ops Rep → Commercial Manager pathway. Perth-based with potential relocation to Singapore/Sydney hub offices.</div></div></div>
 
@@ -914,13 +970,13 @@
   <div class="branch-section" id="b4">
     <div class="branch-header" onclick="tog('bc4')">
       <span>Ω4 · HR Truck Driver <span class="dtag">depth ×e⁴</span></span>
-      <span class="pay-badge">$32–45/hr · Agitator $80–105k · Licence conversion req.</span>
+      <span class="pay-badge">$42–58/hr · Agitator $95–120k · Licence conversion req.</span>
     </div>
     <div class="branch-body collapsed" id="bc4">
 
       <div style="font-size:11px;border-left:3px solid #000;padding-left:8px;margin-bottom:8px;">Cross-reference: Civil Plant Operator → Machine Control Specialist (Ω4.3) is a direct automation crossover — GPS/GNSS machine control systems are a real-world embedded systems application. <a href="#b6-emb">See Ω6.4 Embedded Systems</a> for the deep technical path. OSOM Logistics Coordinator crossover with <a href="#b6-roc">Ω6.2</a> — heavy equipment transport to and from autonomous mine sites.</div>
 
-      <div class="role-node now-entry" id="b4-core"><div class="role-node-header" onclick="togR('r4m')"><div class="rtitle-cell"><div class="rtitle">HR Truck Driver — Core Role</div><div class="rsub">Concrete Agitator dominant · Licence conversion 1–3 weeks · $80–105k</div></div><div class="rpay-cell">$32–45/hr<div class="rpay-sub">Agitator: $55–70/hr eff.</div></div><div class="rexp-cell">+</div></div>
+      <div class="role-node now-entry whv-ok" id="b4-core"><div class="role-node-header" onclick="togR('r4m')"><div class="rtitle-cell"><div class="rtitle">HR Truck Driver — Core Role</div><div class="rsub">Concrete Agitator dominant · Licence conversion 1–3 weeks · $95–120k</div></div><div class="rpay-cell">$42–58/hr<div class="rpay-sub">Agitator: $65–80/hr eff.</div></div><div class="rexp-cell">+</div></div>
         <div class="role-body" id="r4m">
           <div class="rdesc">HR — Heavy Rigid — class. Concrete agitator: antisocial hours + penalties = $55–70/hr effective. Chronic shortage across Boral/Holcim/Hanson/Cockburn Cement. Romanian licence requires WA DoT conversion — 1–3 weeks, $400–600. Study WA road rules handbook now.</div>
         </div>
@@ -953,7 +1009,7 @@
     <p style="font-size:11px;margin-bottom:13px;line-height:1.5;">The pattern across all high-value nodes: physical industry experience + IT comprehension + C systems programming = a profile that is genuinely rare in WA's industrial sector. Most technical candidates lack the physical experience. Most physical workers lack the technical depth. Nobody writes C game engines and also wants to work on mine sites. That is the moat.</p>
 
     <div class="conv-item">
-      <h4>◈ Field Automation Technician — $80–130k · NOW ENTRY · Eye-safe</h4>
+      <h4>◈ Field Automation Technician — $110–165k · NOW ENTRY · Eye-safe</h4>
       <p>The primary convergence for your profile in the short term. Instrumentation tech, PLC commissioning tech, OT network tech, field service tech — all physical, all technical, all eye-safe at entry level, all feeding directly toward the deeper automation paths. Start here.</p>
       <div class="conv-src"><a href="#b5-inst">Ω5.1</a> · <a href="#b5-fst">Ω5.2</a> · <a href="#b5-plc">Ω5.3</a> · <a href="#b5-otn">Ω5.4</a></div>
     </div>
@@ -1078,43 +1134,6 @@
     document.querySelectorAll('.branch-body').forEach(e => e.classList.add('collapsed'));
     document.querySelectorAll('.role-body').forEach(e => { e.classList.remove('open'); const c = e.previousElementSibling?.querySelector('.rexp-cell'); if (c) c.textContent = '+'; });
     document.querySelectorAll('.sub-body').forEach(e => { e.classList.remove('open'); const c = e.previousElementSibling?.querySelector('.stoggle'); if (c) c.textContent = '+'; });
-  }
-  function doSearch(e) {
-    if (e.key === 'Escape') { clearSearch(); return; }
-    const q = document.getElementById('search-input').value.trim().toLowerCase();
-    clearSearch(); // Heal DOM before re-highlighting
-    if (!q || q.length < 2) return;
-    highlight(document.getElementById('main'), q);
-  }
-  function highlight(node, q) {
-    if (node.nodeType === 3) {
-      const val = node.nodeValue;
-      const i = val.toLowerCase().indexOf(q);
-      if (i >= 0) {
-        const span = document.createElement('span');
-        span.className = 'highlight';
-        const match = node.splitText(i);
-        match.splitText(q.length);
-        span.appendChild(match.cloneNode(true));
-        match.parentNode.replaceChild(span, match);
-        return 1;
-      }
-    } else if (node.nodeType === 1 && !['SCRIPT','STYLE','A','BUTTON'].includes(node.tagName)) {
-      let child = node.firstChild;
-      while (child) {
-        let next = child.nextSibling;
-        if (highlight(child, q)) next = child.nextSibling;
-        child = next;
-      }
-    }
-    return 0;
-  }
-  function clearSearch() {
-    document.querySelectorAll('.highlight').forEach(el => {
-      const parent = el.parentNode;
-      parent.replaceChild(document.createTextNode(el.textContent), el);
-      parent.normalize(); // Merge fractured text nodes
-    });
   }
 </script>
 </body>
