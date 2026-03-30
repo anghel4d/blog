@@ -40,15 +40,14 @@
   .now-tag { font-size: 10px; border: 1px solid #fff; padding: 0 5px; white-space: nowrap; }
 
   .branch-section { border: 2px solid #000; margin-bottom: 21px; }
-  .branch-header { background: #000; color: #fff; padding: 5px 8px; font-size: 13px; font-weight: bold; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+  .branch-header { background: #000; color: #fff; padding: 5px 8px; font-size: 13px; font-weight: bold; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
   .branch-header:hover { background: #444; }
   .branch-header.hot-branch { background: #000; border-left: 5px solid #fff; }
   .pay-badge { font-size: 11px; font-weight: normal; border: 1px solid #fff; padding: 0 5px; }
-  .branch-body { padding: 8px; }
-  .branch-body.collapsed { display: none; }
+  details.branch-section > *:not(summary) { padding: 8px; }
 
   .role-node { border: 1px solid #000; margin-bottom: 8px; }
-  .role-node-header { display: flex; justify-content: space-between; align-items: stretch; border-bottom: 1px solid #000; cursor: pointer; user-select: none; }
+  .role-node-header { display: flex; justify-content: space-between; align-items: stretch; border-bottom: 1px solid #000; }
   .role-node-header:hover .rtitle-cell { background: #f0f0f0; }
   .rtitle-cell { padding: 4px 8px; flex: 1; }
   .rtitle { font-weight: bold; font-size: 12px; text-transform: uppercase; }
@@ -133,6 +132,14 @@
   .factorio-table th { background: #333; }
   .factorio-table td:first-child { font-style: italic; color: #444; }
 
+
+  /* ── DETAILS / SUMMARY — zero JS ── */
+  details summary { list-style: none; cursor: pointer; user-select: none; }
+  details summary::-webkit-details-marker { display: none; }
+  details.role-node > summary .rexp-cell::after { content: '+'; }
+  details.role-node[open] > summary .rexp-cell::after { content: '−'; }
+  details.sub-role > summary .stoggle::after { content: '+'; }
+  details.sub-role[open] > summary .stoggle::after { content: '−'; }
   /* ── MOBILE ── */
   @media (max-width: 768px) {
     #masthead {
@@ -201,6 +208,7 @@
   <div>
     <h1>Perth Labour Market — Fractal Analysis Dossier v2</h1>
     <div class="sub">Western Australia · Physical Trades · Automation & Field Tech · Convergence Pathways · Early Entry Emphasis</div>
+    <div style="font-size:11px;color:#666;margin-top:3px;letter-spacing:0.04em;">BROADSIDE LOGISTICAL INC. · BROADSIDE AUSTRALIA — Research Phase</div>
   </div>
   <div class="meta">
     <div><span>Dossier Ref:</span> <b>E-2.71828 / φ-1.618 / v2</b></div>
@@ -215,39 +223,47 @@
 
 <div id="sidebar">
   <h2>Index</h2>
-  <button class="toc-btn" onclick="go('b1')">Ω1 · Comms Rigger</button>
-  <button class="toc-btn toc-sub" onclick="go('b1-th')">↳ 1.1 Tower Hand</button>
-  <button class="toc-btn toc-sub" onclick="go('b1-sr')">↳ 1.2 Structural Rigger</button>
-  <button class="toc-btn toc-sub" onclick="go('b1-rf')">↳ 1.3 RF Technician</button>
-  <button class="toc-btn" onclick="go('b2')">Ω2 · Stevedore</button>
-  <button class="toc-btn toc-sub" onclick="go('b2-pe')">↳ 2.1 Port Equip. Operator</button>
-  <button class="toc-btn toc-sub" onclick="go('b2-cs')">↳ 2.2 Cargo Surveyor</button>
-  <button class="toc-btn toc-sub" onclick="go('b2-fc')">↳ 2.3 Freight Coordinator</button>
-  <button class="toc-btn" onclick="go('b3')">Ω3 · Heavy Forklift</button>
-  <button class="toc-btn toc-sub" onclick="go('b3-rt')">↳ 3.1 Reach Truck</button>
-  <button class="toc-btn toc-sub" onclick="go('b3-ys')">↳ 3.2 Yard Supervisor</button>
-  <button class="toc-btn toc-sub" onclick="go('b3-cl')">↳ 3.3 Container Logistics</button>
-  <button class="toc-btn" onclick="go('b4')">Ω4 · HR Truck Driver</button>
-  <button class="toc-btn toc-sub" onclick="go('b4-hc')">↳ 4.1 HC Driver</button>
-  <button class="toc-btn toc-sub" onclick="go('b4-ct')">↳ 4.2 Crane Truck</button>
-  <button class="toc-btn toc-sub" onclick="go('b4-cp')">↳ 4.3 Civil Plant</button>
-  <button class="toc-btn hot" onclick="go('b5')">★ Ω5 · Field Automation Tech</button>
-  <button class="toc-btn toc-hot" onclick="go('b5-inst')">↳ 5.1 Instrumentation Tech</button>
-  <button class="toc-btn toc-hot" onclick="go('b5-fst')">↳ 5.2 Field Service Tech</button>
-  <button class="toc-btn toc-hot" onclick="go('b5-plc')">↳ 5.3 PLC Commissioning Tech</button>
-  <button class="toc-btn toc-hot" onclick="go('b5-otn')">↳ 5.4 OT Network Tech</button>
-  <button class="toc-btn hot" onclick="go('b6')">★ Ω6 · Mining Automation</button>
-  <button class="toc-btn toc-hot" onclick="go('b6-aet')">↳ 6.1 Autonomous Equip. Tech</button>
-  <button class="toc-btn toc-hot" onclick="go('b6-roc')">↳ 6.2 Remote Ops Tech</button>
-  <button class="toc-btn toc-hot" onclick="go('b6-csw')">↳ 6.3 Controls Software Eng.</button>
-  <button class="toc-btn toc-hot" onclick="go('b6-emb')">↳ 6.4 Embedded Systems</button>
+  <a class="toc-btn" href="#b1">Ω1 · Comms Rigger</a>
+  <a class="toc-btn toc-sub" href="#b1-th">↳ 1.1 Tower Hand</a>
+  <a class="toc-btn toc-sub" href="#b1-sr">↳ 1.2 Structural Rigger</a>
+  <a class="toc-btn toc-sub" href="#b1-rf">↳ 1.3 RF Technician</a>
+  <a class="toc-btn" href="#b2">Ω2 · Stevedore</a>
+  <a class="toc-btn toc-sub" href="#b2-pe">↳ 2.1 Port Equip. Operator</a>
+  <a class="toc-btn toc-sub" href="#b2-cs">↳ 2.2 Cargo Surveyor</a>
+  <a class="toc-btn toc-sub" href="#b2-fc">↳ 2.3 Freight Coordinator</a>
+  <a class="toc-btn" href="#b3">Ω3 · Heavy Forklift</a>
+  <a class="toc-btn toc-sub" href="#b3-rt">↳ 3.1 Reach Truck</a>
+  <a class="toc-btn toc-sub" href="#b3-ys">↳ 3.2 Yard Supervisor</a>
+  <a class="toc-btn toc-sub" href="#b3-cl">↳ 3.3 Container Logistics</a>
+  <a class="toc-btn" href="#b4">Ω4 · HR Truck Driver</a>
+  <a class="toc-btn toc-sub" href="#b4-hc">↳ 4.1 HC Driver</a>
+  <a class="toc-btn toc-sub" href="#b4-ct">↳ 4.2 Crane Truck</a>
+  <a class="toc-btn toc-sub" href="#b4-cp">↳ 4.3 Civil Plant</a>
+  <a class="toc-btn hot" href="#b5">★ Ω5 · Field Automation Tech</a>
+  <a class="toc-btn toc-hot" href="#b5-inst">↳ 5.1 Instrumentation Tech</a>
+  <a class="toc-btn toc-hot" href="#b5-fst">↳ 5.2 Field Service Tech</a>
+  <a class="toc-btn toc-hot" href="#b5-plc">↳ 5.3 PLC Commissioning Tech</a>
+  <a class="toc-btn toc-hot" href="#b5-otn">↳ 5.4 OT Network Tech</a>
+  <a class="toc-btn hot" href="#b6">★ Ω6 · Mining Automation</a>
+  <a class="toc-btn toc-hot" href="#b6-aet">↳ 6.1 Autonomous Equip. Tech</a>
+  <a class="toc-btn toc-hot" href="#b6-roc">↳ 6.2 Remote Ops Tech</a>
+  <a class="toc-btn toc-hot" href="#b6-csw">↳ 6.3 Controls Software Eng.</a>
+  <a class="toc-btn toc-hot" href="#b6-emb">↳ 6.4 Embedded Systems</a>
+  <a class="toc-btn hot" href="#b7">★ Ω7 · FIFO — The Remote Layer</a>
+  <a class="toc-btn toc-hot" href="#b7-1">↳ 7.1 FIFO Rigger</a>
+  <a class="toc-btn toc-hot" href="#b7-2">↳ 7.2 FIFO E&amp;I / Instrumentation</a>
+  <a class="toc-btn toc-hot" href="#b7-3">↳ 7.3 FIFO PLC / Commissioning</a>
+  <a class="toc-btn toc-hot" href="#b7-4">↳ 7.4 FIFO Automation Tech</a>
+  <a class="toc-btn toc-hot" href="#b7-5">↳ 7.5 FIFO Crane — Shutdown</a>
+  <a class="toc-btn toc-hot" href="#b7-6">↳ 7.6 FIFO Site Safety / ERT</a>
   <hr class="div">
-  <button class="toc-btn" onclick="go('factorio')">◈ Factorio→Real World</button>
-  <button class="toc-btn" onclick="go('conv')">◈ Convergence Nodes</button>
-  <button class="toc-btn" onclick="go('seq')">◈ Entry Sequence</button>
+  <a class="toc-btn" href="#factorio">◈ Factorio→Real World</a>
+  <a class="toc-btn" href="#conv">◈ Convergence Nodes</a>
+  <a class="toc-btn" href="#seq">◈ Entry Sequence</a>
+  <a class="toc-btn" href="#dfes">◈ DFES Volunteer Firefighter</a>
   <hr class="div">
-  <button class="toc-btn" onclick="expandAll()">[Expand All]</button>
-  <button class="toc-btn" onclick="collapseAll()">[Collapse All]</button>
+  <a class="toc-btn" onclick="expandAll()">[Expand All]</a>
+  <a class="toc-btn" onclick="collapseAll()">[Collapse All]</a>
   <hr class="div">
   <span class="sidebar-label">Constants</span>
   <div class="const-block">
@@ -284,12 +300,12 @@
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- BRANCH 5: FIELD AUTOMATION TECHNICIAN ★ PRIORITY      -->
   <!-- ═══════════════════════════════════════════════════════ -->
-  <div class="branch-section" id="b5">
-    <div class="branch-header hot-branch" onclick="tog('bc5')">
+  <details class="branch-section" id="b5" open>
+    <summary class="branch-header hot-branch">
       <span>★ Ω5 · Field Automation Technician <span class="dtag">depth ×e⁵</span></span>
       <span class="pay-badge">$55–90/hr · THE NERD/BRAWN INTERSECTION</span>
-    </div>
-    <div class="branch-body" id="bc5">
+    </summary>
+    
 
       <div style="font-size:11px;line-height:1.6;border-left:3px solid #000;padding-left:8px;margin-bottom:13px;">
         Field automation is where the physical and technical worlds collide and nobody else wants to live in both simultaneously. You're on site — in a mine, a refinery, a port terminal, a water treatment plant — hands on panels, cable trays, sensor housings, valve actuators. You're also reading P&IDs — Piping and Instrumentation Diagrams — writing PLC logic, diagnosing comms faults with a laptop. Physically demanding, technically deep, outdoors or in industrial environments. This is what your profile was built for. Perth's resources sector creates sustained and growing demand at every level of this branch.
@@ -540,19 +556,18 @@
         </div>
       </div>
 
-    </div>
-  </div>
+    </details>
 
 
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- BRANCH 6: MINING AUTOMATION ★ PRIORITY                -->
   <!-- ═══════════════════════════════════════════════════════ -->
-  <div class="branch-section" id="b6">
-    <div class="branch-header hot-branch" onclick="tog('bc6')">
+  <details class="branch-section" id="b6" open>
+    <summary class="branch-header hot-branch">
       <span>★ Ω6 · Mining Automation & Autonomous Systems <span class="dtag">depth ×e⁶</span></span>
       <span class="pay-badge">$60–100/hr · Where Perth leads the world</span>
-    </div>
-    <div class="branch-body" id="bc6">
+    </summary>
+    
 
       <div style="font-size:11px;line-height:1.6;border-left:3px solid #000;padding-left:8px;margin-bottom:13px;">
         Perth's Pilbara mining operations run the world's most advanced autonomous mining systems. Rio Tinto's AutoHaul — the world's first fully autonomous heavy haul rail network, 1,700km of track — is operated from Perth. BHP's AHS — Autonomous Haulage System — runs 100+ autonomous trucks at Pilbara iron ore operations. Fortescue is running autonomous trucks, drills, and is developing autonomous LHDs — Load-Haul-Dump machines — underground. All of this is controlled, monitored, and increasingly engineered from Perth. The Remote Operations Centres are here. The automation engineers are here. The companies writing the embedded firmware for the machines are here or accessible from here. You are going to the right city.
@@ -779,37 +794,10 @@
         </div>
       </div>
 
-    </div>
-  </div>
+    </details>
 
 
   <!-- ═══════════════════════════════════════════════════════ -->
-  <!-- FACTORIO TRANSLATION TABLE                             -->
-  <!-- ═══════════════════════════════════════════════════════ -->
-  <div class="seq-block" id="factorio">
-    <div class="seq-header">◈ Factorio → Real World Translation Table</div>
-    <div class="seq-body">
-      <table class="factorio-table">
-        <thead><tr><th>Factorio</th><th>Real World Equivalent</th><th>Branch</th></tr></thead>
-        <tbody>
-          <tr><td>Belt throughput optimisation</td><td>Conveyor and material handling system design, OEE — Overall Equipment Effectiveness — analysis</td><td><a href="#b5-inst">Ω5.1</a> · <a href="#b6-roc">Ω6.2</a></td></tr>
-          <tr><td>Inserter / circuit logic</td><td>PLC — Programmable Logic Controller — programming, IEC 61131-3 Structured Text</td><td><a href="#b5-plc">Ω5.3</a> · <a href="#b6-csw">Ω6.3</a></td></tr>
-          <tr><td>Combinator networks</td><td>SCADA — Supervisory Control and Data Acquisition — systems, historian databases, alarm logic</td><td><a href="#b5-fst">Ω5.2</a> · <a href="#b6-roc">Ω6.2</a></td></tr>
-          <tr><td>Logistics bots / roboports</td><td>AGV/AMR — Autonomous Guided/Mobile Robot — fleets, autonomous haul truck management</td><td><a href="#b6-aet">Ω6.1</a> · <a href="#b6-roc">Ω6.2</a></td></tr>
-          <tr><td>UPS optimisation</td><td>Real-time system performance optimisation, PLC scan time management, SCADA server load</td><td><a href="#b6-csw">Ω6.3</a> · <a href="#b6-emb">Ω6.4</a></td></tr>
-          <tr><td>Nuclear power ratio management</td><td>PID — Proportional-Integral-Derivative — control loop tuning, process control</td><td><a href="#b5-fst">Ω5.2</a> · <a href="#b6-csw">Ω6.3</a></td></tr>
-          <tr><td>Biters forcing redundancy design</td><td>Fault tolerance, redundancy engineering, SIL-rated safety systems</td><td><a href="#b5-inst">Ω5.1</a> · <a href="#b6-emb">Ω6.4</a></td></tr>
-          <tr><td>Blueprint libraries</td><td>Standardised automation modules, reusable PLC code libraries, IEC 61131-3 function block libraries</td><td><a href="#b6-csw">Ω6.3</a></td></tr>
-          <tr><td>Circuit network conditions</td><td>Safety interlock logic, permissive logic, cause-and-effect matrices</td><td><a href="#b5-plc">Ω5.3</a> · <a href="#b6-csw">Ω6.3</a></td></tr>
-          <tr><td>Rail signal block management</td><td>AutoHaul autonomous train collision avoidance, AHS truck path planning and conflict resolution</td><td><a href="#b6-aet">Ω6.1</a> · <a href="#b6-roc">Ω6.2</a></td></tr>
-          <tr><td>Spidertron remote control</td><td>Remote machine operation, ROC — Remote Operations Centre — teleoperation systems</td><td><a href="#b6-roc">Ω6.2</a></td></tr>
-          <tr><td>1k SPM factory design</td><td>Mine of the Future — integrated autonomous, digital, and optimised mining operations at scale</td><td><a href="#b6-roc">Ω6.2</a> · <a href="#b6-csw">Ω6.3</a></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-
   <!-- FACTORIO TRANSLATION TABLE                             -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <div class="seq-block" id="factorio">
@@ -837,12 +825,12 @@
 
 
   <!-- ═══ BRANCHES 1–4 (CONDENSED) ═══ -->
-  <div class="branch-section" id="b1">
-    <div class="branch-header" onclick="tog('bc1')">
+  <details class="branch-section" id="b1">
+    <summary class="branch-header">
       <span>Ω1 · Communications Rigger <span class="dtag">depth ×e¹</span></span>
       <span class="pay-badge">$45–68/hr · $110–135k</span>
-    </div>
-    <div class="branch-body collapsed" id="bc1">
+    </summary>
+    
 
       <div style="font-size:11px;border-left:3px solid #000;padding-left:8px;margin-bottom:8px;">Cross-reference: Comms rigging overlaps with <a href="#b5-otn">Ω5.4 OT Network Tech</a> (industrial wireless infrastructure on mine sites) and <a href="#b5-inst">Ω5.1 Instrumentation Tech</a> (sensor mounting and cabling). The RF Technician branch (Ω1.3) feeds directly into automation vendor roles at <a href="#b5-fst">Ω5.2</a>.</div>
 
@@ -898,15 +886,14 @@
         </div>
       </div>
 
-    </div>
-  </div>
+    </details>
 
-  <div class="branch-section" id="b2">
-    <div class="branch-header" onclick="tog('bc2')">
+  <details class="branch-section" id="b2">
+    <summary class="branch-header">
       <span>Ω2 · Stevedore <span class="dtag">depth ×e²</span></span>
       <span class="pay-badge">$50–72/hr · MUA Protected · MSIC Critical</span>
-    </div>
-    <div class="branch-body collapsed" id="bc2">
+    </summary>
+    
 
       <div style="font-size:11px;border-left:3px solid #000;padding-left:8px;margin-bottom:8px;">Port automation crossover: Fremantle terminal automation (RTG cranes, TOS) feeds directly into <a href="#b5-fst">Ω5.2 Field Service Tech</a> and <a href="#b6-roc">Ω6.2 Remote Operations</a>. The Terminal Systems Analyst node is a direct convergence with <a href="#b5-otn">Ω5.4 OT Network</a>.</div>
 
@@ -938,15 +925,14 @@
       <div class="role-node" id="b2-cs"><div class="role-node-header" onclick="togR('r2-2')"><div class="rtitle-cell"><div class="rtitle">2.2 — Marine Cargo Surveyor → Draught Surveyor / DG Inspector / P&I</div><div class="rsub">$45–75/hr · Multiple specialist paths</div></div><div class="rpay-cell">$45–75/hr</div><div class="rexp-cell">+</div></div><div class="role-body" id="r2-2"><div class="rdesc">Condition inspection, DG classification, draught measurement. Full progression detail available — see earlier version. <a href="#conv">Hazmat Consultant is a convergence node.</a></div></div></div>
       <div class="role-node" id="b2-fc"><div class="role-node-header" onclick="togR('r2-3')"><div class="rtitle-cell"><div class="rtitle">2.3 — Freight Logistics Coordinator <span class="flag-tag">!</span></div><div class="rsub">Screen-heavy — revisit post-eye</div></div><div class="rpay-cell">$60–85k</div><div class="rexp-cell">+</div></div><div class="role-body" id="r2-3"><div class="rdesc">Screen-heavy. Flagged. Long-term path: Supply Chain Systems Manager → Digital Supply Chain Consultant ◈. <a href="#b5-otn">OT network background makes you useful in logistics technology integration.</a></div></div></div>
 
-    </div>
-  </div>
+    </details>
 
-  <div class="branch-section" id="b3">
-    <div class="branch-header" onclick="tog('bc3')">
+  <details class="branch-section" id="b3">
+    <summary class="branch-header">
       <span>Ω3 · Heavy Forklift Operator <span class="dtag">depth ×e³</span></span>
       <span class="pay-badge">$38–52/hr · Fastest Perth cash flow · LF licence Day One</span>
-    </div>
-    <div class="branch-body collapsed" id="bc3">
+    </summary>
+    
 
       <div style="font-size:11px;border-left:3px solid #000;padding-left:8px;margin-bottom:8px;">Primary value in this dossier: fastest path to Perth cash flow while ticket-stacking and self-studying. LF licence Day One, labour hire placement within days. WMS Superuser node crosses into <a href="#b5-fst">Ω5.2</a> and <a href="#b6-roc">Ω6.2</a> — warehouse and logistics automation is growing rapidly in Perth.</div>
 
@@ -964,15 +950,14 @@
       <div class="role-node" id="b3-ys"><div class="role-node-header" onclick="togR('r3-2')"><div class="rtitle-cell"><div class="rtitle">3.2 — Yard Supervisor → Transport Technology Manager</div><div class="rsub">$65–130k range · Transport planner <span class="flag-tag">!</span></div></div><div class="rpay-cell">$65–130k</div><div class="rexp-cell">+</div></div><div class="role-body" id="r3-2"><div class="rdesc">Transport planning is screen-heavy — flag. Transport Technology Manager (telematics, fleet management platforms) is an IT-logistics hybrid with manageable screen intensity. Cross-reference <a href="#b6-roc">Ω6.2 Remote Operations</a> — remote fleet management at mine sites is conceptually adjacent.</div></div></div>
       <div class="role-node" id="b3-cl"><div class="role-node-header" onclick="togR('r3-3')"><div class="rtitle-cell"><div class="rtitle">3.3 — Container Logistics Operative → Shipping Line Ops</div><div class="rsub">$35–100k range</div></div><div class="rpay-cell">$35–50/hr</div><div class="rexp-cell">+</div></div><div class="role-body" id="r3-3"><div class="rdesc">Container parks, empty depots, freight stations. Container Inspector → Shipping Line Ops Rep → Commercial Manager pathway. Perth-based with potential relocation to Singapore/Sydney hub offices.</div></div></div>
 
-    </div>
-  </div>
+    </details>
 
-  <div class="branch-section" id="b4">
-    <div class="branch-header" onclick="tog('bc4')">
+  <details class="branch-section" id="b4">
+    <summary class="branch-header">
       <span>Ω4 · HR Truck Driver <span class="dtag">depth ×e⁴</span></span>
       <span class="pay-badge">$42–58/hr · Agitator $95–120k · Licence conversion req.</span>
-    </div>
-    <div class="branch-body collapsed" id="bc4">
+    </summary>
+    
 
       <div style="font-size:11px;border-left:3px solid #000;padding-left:8px;margin-bottom:8px;">Cross-reference: Civil Plant Operator → Machine Control Specialist (Ω4.3) is a direct automation crossover — GPS/GNSS machine control systems are a real-world embedded systems application. <a href="#b6-emb">See Ω6.4 Embedded Systems</a> for the deep technical path. OSOM Logistics Coordinator crossover with <a href="#b6-roc">Ω6.2</a> — heavy equipment transport to and from autonomous mine sites.</div>
 
@@ -999,8 +984,7 @@
         </div>
       </div>
 
-    </div>
-  </div>
+    </details>
 
 
   <!-- ═══ CONVERGENCE ═══ -->
@@ -1027,15 +1011,33 @@
     </div>
 
     <div class="conv-item">
-      <h4>◈ Controls Software Engineer — $90–160k · The C Path</h4>
-      <p>IEC 61131-3 Structured Text is syntactically C. The game engine is the proof of concept. Build Codesys/TwinCAT projects on GitHub. Physical automation work (Ω5) provides the domain context. Entry within 12–18 months of Perth arrival.</p>
-      <div class="conv-src"><a href="#b6-csw">Ω6.3</a> · from <a href="#b5-plc">Ω5.3</a> · C game engine portfolio</div>
+      <h4>◈ Controls Software Engineer — $120–170k · The C Path</h4>
+      <p>IEC 61131-3 Structured Text is syntactically C. The game engine is the proof of concept. Physical automation work (Ω5) provides the domain context. The Rockwell Logix Designer cert formalises it. Entry within 12–18 months of Perth arrival.</p>
+      <div class="conv-src"><a href="#b6-csw">Ω6.3</a> · from <a href="#b5-plc">Ω5.3</a> · C game engine</div>
     </div>
 
     <div class="conv-item">
-      <h4>◈ Safety-Critical Firmware / Embedded Systems — $140–250k · Long runway, clear path</h4>
-      <p>The technical apex. IEC 61508 safety-critical embedded C for autonomous mining equipment. Global shortage. Perth's autonomous mining industry is the demand centre. The path starts with physical site work + self-study (STM32, FreeRTOS, CAN bus). 3–5 year runway from current position.</p>
+      <h4>◈ Safety-Critical Firmware / Embedded Systems — $155–220k · Long runway, clear path</h4>
+      <p>The technical apex. IEC 61508 safety-critical embedded C for autonomous mining equipment. Global shortage. Perth's autonomous mining industry is the demand centre. The path starts with physical site work and the C game engine portfolio you already have. 3–5 year runway from current position.</p>
       <div class="conv-src"><a href="#b6-emb">Ω6.4</a> · C game engine · <a href="#b6-aet">Ω6.1</a> · <a href="#b6-csw">Ω6.3</a></div>
+    </div>
+
+    <div class="conv-item">
+      <h4>◈ FIFO Rate Unlock — The Remote Layer</h4>
+      <p>Any Ω5–Ω6 metro role after 6–12 months converts to an Ω7 FIFO equivalent. Rate near-doubles. Accommodation and meals included. Burn rate near-zero. Net savings rate on a 2/1 FIFO roster is extraordinary. FIFO employers have higher replacement cost than metro — stronger sponsorship motivation and longer retention investment.</p>
+      <div class="conv-src"><a href="#b7">Ω7</a> · unlocks from <a href="#b5-inst">Ω5.1</a> · <a href="#b5-fst">Ω5.2</a> · <a href="#b5-plc">Ω5.3</a> · <a href="#b6-aet">Ω6.1</a> · <a href="#b4-ct">Ω4.2</a></div>
+    </div>
+
+    <div class="conv-item">
+      <h4>◈ DFES → ERT → Mine Site Safety Premium</h4>
+      <p>The only free ticket stack in this dossier that unlocks a paid site premium. DFES volunteer service provides BA, ICS, and structural firefighting credentials at zero cost. These directly satisfy mine site ERT — Emergency Response Team — requirements. ERT roles carry a site allowance premium on top of base rate. The SWORD communications unit additionally provides hands-on experience with mobile satellite, thermal imaging, and emergency mesh radio — the same hardware stack as mine site remote monitoring infrastructure.</p>
+      <div class="conv-src"><a href="#dfes">◈ DFES Volunteer</a> · <a href="#b7-6">Ω7.6 ERT</a> · <a href="#b5-otn">Ω5.4 OT Network</a></div>
+    </div>
+
+    <div class="conv-item">
+      <h4>◈ Emergency Automation Specialist — BROADSIDE Roadmap Item</h4>
+      <p>Not a Perth arrival objective. Not a job that exists yet. A future BROADSIDE service vertical — the point where OT security competence, mine site physical experience, autonomous systems ground truth, and DFES operational emergency credentials converge into an independent B2B offering. The person who holds this profile names the role. Note it. Park it. Return to it at BROADSIDE maturity.</p>
+      <div class="conv-src">BROADSIDE LOGISTICAL INC. · Roadmap — not Perth arrival scope · <a href="#b5-otn">Ω5.4</a> · <a href="#b6-aet">Ω6.1</a> · <a href="#dfes">DFES SWORD unit</a></div>
     </div>
 
     <div class="conv-item">
@@ -1065,24 +1067,206 @@
       <table>
         <thead><tr><th>Priority</th><th>Action</th><th>Cost (AUD)</th><th>Time</th><th>Unlocks</th></tr></thead>
         <tbody>
+          <tr class="pnow"><td><b>★ Day One — Line One</b></td><td>Bank account — CommBank or NAB · in-branch · passport · same day</td><td>Free</td><td>1–2 hrs</td><td>Ability to receive wages · Everything downstream requires this</td></tr>
           <tr class="pnow"><td><b>★ Day One</b></td><td>LF Forklift licence</td><td>$300–500</td><td>1 day</td><td>Immediate labour hire cash flow · Funds everything else</td></tr>
-          <tr class="pnow"><td><b>★ Day One</b></td><td>MSIC application</td><td>~$200</td><td>2–4 wks processing</td><td>Port access clock starts · Non-negotiable</td></tr>
           <tr class="pnow"><td><b>★ Day One</b></td><td>White Card</td><td>~$100</td><td>1 day</td><td>All construction and industrial site access</td></tr>
+          <tr class="pnow"><td><b>★ Day One</b></td><td>MSIC application</td><td>~$200</td><td>2–4 wks processing</td><td>Port access clock starts · Non-negotiable</td></tr>
           <tr class="pnow"><td><b>★ Day One</b></td><td>Apply to RCT Automation Perth (junior tech roles)</td><td>Free</td><td>Immediate</td><td>Best-fit employer for your exact profile</td></tr>
-          <tr class="pnow"><td><b>★ Tonight (Japan)</b></td><td>Download Beckhoff TwinCAT 3 and Codesys — build something</td><td>Free</td><td>Now</td><td>PLC portfolio before you land · Immediate application credibility</td></tr>
-          <tr class="pnow"><td><b>★ Tonight (Japan)</b></td><td>Buy a STM32 dev board (AliExpress ~$8) + FreeRTOS tutorial</td><td>$8–15</td><td>Shipping lag</td><td>Embedded systems portfolio start · Ships to Perth address</td></tr>
-          <tr class="p1"><td><b>1 — Week 1–2</b></td><td>Register all 5 labour hire companies</td><td>Free</td><td>Online</td><td>Parallel placement pipeline · Income stream</td></tr>
+          <tr class="p1"><td><b>1 — Week 1</b></td><td>Secure Perth address</td><td>~$175–200/wk share house</td><td>Week 1</td><td>DFES registration · Formal mail · Labour hire credibility</td></tr>
+          <tr class="p1"><td><b>1 — Week 1</b></td><td>Register all 5 labour hire companies</td><td>Free</td><td>Online</td><td>Parallel placement pipeline · Income stream</td></tr>
+          <tr class="p1"><td><b>1 — Week 1–2</b></td><td>Register with DFES as volunteer — <a href="https://dfes.vol.org.au">dfes.vol.org.au</a></td><td>Free</td><td>2–3 wks processing</td><td>Ticket pipeline starts immediately · See ◈ DFES block below</td></tr>
           <tr class="p1"><td><b>1 — Week 1–2</b></td><td>Apply to Emerson, Honeywell, ABB Perth — junior FST roles</td><td>Free</td><td>Ongoing</td><td>Automation vendor entry — best long-term employer route</td></tr>
           <tr class="p1"><td><b>1 — Week 1–2</b></td><td>HR Licence conversion — WA DoT</td><td>$400–600</td><td>1–3 weeks</td><td>Truck driving · Concrete agitator · Best hourly uplift</td></tr>
           <tr class="p2"><td><b>2 — Month 1</b></td><td>MSIC arrives → register DP World / Qube roster</td><td>—</td><td>On receipt</td><td>Port work · MUA rates · Permanency pathway</td></tr>
           <tr class="p2"><td><b>2 — Month 1–2</b></td><td>Cert III Instrumentation &amp; Control — TAFE WA</td><td>Verify: WHV holders pay full international fees, likely $5,000–8,000+</td><td>Part-time alongside work</td><td>Formal instrumentation credential · Employer credibility</td></tr>
-          <tr class="p2"><td><b>2 — Month 1–2</b></td><td>Rockwell or Siemens online PLC certification</td><td>$200–400</td><td>Self-paced · 2–4 weeks</td><td>Formalises self-study · Required by many FST roles</td></tr>
+          <tr class="p2"><td><b>2 — Month 1–2</b></td><td>Rockwell Logix Designer Specialist certification</td><td>$200–400</td><td>Self-paced · 2–4 weeks</td><td>Vendor-recognised PLC credential · Required by many FST roles</td></tr>
           <tr class="p3"><td><b>3 — Month 2–3</b></td><td>GICSP certification (SANS) — OT cybersecurity</td><td>~$1,500 AUD exam only — SANS training extra</td><td>Self-study 4–6 weeks</td><td>OT security niche · Most undersupplied skill in WA industrial sector</td></tr>
-          <tr class="p3"><td><b>3 — Month 3+</b></td><td>STM32 + FreeRTOS + CAN bus project on GitHub</td><td>~$30 hardware</td><td>Parallel to work</td><td>Embedded systems portfolio · Ω6.4 application credibility</td></tr>
+          <tr class="p3"><td><b>3 — Month 3–4</b></td><td>First DFES operational deployment</td><td>Free — gear provided</td><td>After training complete</td><td>BA ticket · ICS familiarity · ERT eligibility building · See ◈ DFES block</td></tr>
+          <tr class="p3"><td><b>3 — Month 6+</b></td><td>Eye cleared → assess FIFO eligibility → <a href="#b7">Ω7 conversion window opens</a></td><td>—</td><td>Medical clearance</td><td>Rate near-doubles · Burn rate near-zero · WHV regional days accumulate</td></tr>
           <tr class="p3"><td><b>3 — Ongoing</b></td><td>Eye situation resolved → reassign screen-flagged roles</td><td>—</td><td>As resolved</td><td>RAN engineer · ROC operator · Full branch access</td></tr>
         </tbody>
       </table>
-      <p style="font-size:11px;line-height:1.5;border-left:3px solid #000;padding-left:8px;margin-top:8px;"><b>The thesis:</b> LF Forklift + White Card = cash flow Day One. MSIC = port access in 4 weeks. RCT Automation + Emerson/ABB/Honeywell applications = parallel automation vendor track. Cert III Instrumentation + PLC self-study = formal credential stack. STM32/FreeRTOS = embedded portfolio. In 6 months you have physical site experience, formal instrumentation credential, PLC certification, OT security cert, and an embedded systems GitHub. That is an unusual human being in Perth's automation job market.</p>
+      <p style="font-size:11px;line-height:1.5;border-left:3px solid #000;padding-left:8px;margin-top:8px;"><b>The thesis:</b> Bank account is line one. Cash flow is Day One. Everything else is downstream of income. In 6 months: physical site experience, formal instrumentation credential, PLC certification, OT security cert, DFES operational status, and FIFO window open. That is an unusual human being in Perth's automation job market.</p>
+    </div>
+  </div>
+
+  <!-- ═══ OMEGA 7: FIFO — THE REMOTE LAYER ═══ -->
+  <details class="branch-section" id="b7" open>
+    <summary class="branch-header hot-branch">
+      <span>★ Ω7 · FIFO — The Remote Layer <span class="dtag">depth ×e⁷</span></span>
+      <span class="pay-badge">$65–130/hr · accommodation + meals · WHV regional days · unlocks from Ω1–Ω6</span>
+    </summary>
+    
+
+      <div style="font-size:11px;line-height:1.6;border-left:3px solid #000;padding-left:8px;margin-bottom:13px;">
+        Ω7 is not a new career. It is the same fractal at higher gain. Every node here mirrors a metro parent in Ω1–Ω6 — self-similar by design. What changes: the site is remote, the rate nearly doubles, accommodation and meals are included on swing, the burn rate drops to near-zero, and every day worked in the Pilbara counts as a WHV regional day toward second and third year visa eligibility. Unlock condition: 6–12 months metro experience in the parent branch, plus eye medical clearance. Rosters shown as on/off week swings.
+      </div>
+
+      <div class="role-node now-entry" id="b7-1">
+        <div class="role-node-header" onclick="togR('r7-1')">
+          <div class="rtitle-cell">
+            <div class="rtitle">7.1 — FIFO Structural Rigger / Advanced Rigger</div>
+            <div class="rsub">↗ <a href="#b1-sr">Ω1.2</a> · Pilbara · 2/1 or 3/1 · Mammoet · PLI · Civmec · Monadelphous · WHV regional</div>
+          </div>
+          <div class="rpay-cell">$65–78/hr<div class="rpay-sub">2/1 · meals+accom incl.</div></div>
+          <div class="rexp-cell">+</div>
+        </div>
+        <div class="role-body" id="r7-1">
+          <div class="rdesc">Same work as <a href="#b1-sr">Ω1.2</a>. Different economics. Active SEEK listings January 2026: $58–68/hr base + travel allowance. Monadelphous Scarborough HUC 3/3 roster, Civmec BHP Car Dumper Vault, PLI Pilbara shutdown circuit — all active. 2/1: 14 days on, 7 off. Accommodation and meals on swing cost zero.</div>
+          <div class="info-grid">
+            <div class="info-box"><div class="info-box-title">Roster Economics</div><ul><li>2/1: 14 on · 7 off · repeat</li><li>3/1: 21 on · 7 off · higher base</li><li>Accommodation + meals: $0 cost on swing</li><li>WHV: Pilbara = regional = 2nd year (88 days) / 3rd year (179 days)</li><li>Net savings rate: extraordinary</li></ul></div>
+            <div class="info-box"><div class="info-box-title">Site Induction Requirements</div><ul><li>BSMS or site-equivalent safety induction</li><li>Site-specific induction: 1–2 days on arrival</li><li>Drug and alcohol testing — pre-employment + random</li><li>Site medical: standard fitness-for-duty</li><li>Fit for duty declaration</li></ul></div>
+          </div>
+          <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s7-1-shut')"><div class="sname"><span class="arr">→</span>Shutdown Specialist FIFO ◈ <span class="dtag">L2</span></div><div class="spay">$75–95/hr · shutdown circuit</div><div class="stoggle">+</div></div>
+              <div class="sub-body" id="s7-1-shut"><p>Rotate through Pilbara mine and refinery shutdowns year-round. 2–6 week blocks at top rates. Build the network. Become a known contractor on the circuit. <a href="#conv">See Convergence: Shutdown/Turnaround.</a></p>
+                <div class="l2"><div class="sub-role"><div class="sub-role-header" onclick="togS('s7-1-hl')"><div class="sname"><span class="arr">→</span>Heavy Lift Specialist FIFO <span class="dtag">L3</span></div><div class="spay">$100–130/hr shutdown</div><div class="stoggle">+</div></div>
+                  <div class="sub-body" id="s7-1-hl"><p>Multi-crane lifts, oversized loads, mine capital shutdowns. Mammoet and Boom Logistics deploy from Perth to Pilbara. Top-tier contractor rates. The anti-FIFO path to FIFO money at its apex.</p></div>
+                </div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-node now-entry" id="b7-2">
+        <div class="role-node-header" onclick="togR('r7-2')">
+          <div class="rtitle-cell">
+            <div class="rtitle">7.2 — FIFO E&amp;I / Instrumentation Technician</div>
+            <div class="rsub">↗ <a href="#b5-inst">Ω5.1</a> · 8/6 DIDO or 2/1 · $90–95/hr confirmed SEEK · Glencore Telfer · BHP Kwinana · Liontown · WHV regional</div>
+          </div>
+          <div class="rpay-cell">$90–95/hr<div class="rpay-sub">8/6 DIDO · meals+accom</div></div>
+          <div class="rexp-cell">+</div>
+        </div>
+        <div class="role-body" id="r7-2">
+          <div class="rdesc">The single most significant rate jump in this dossier. Perth metro instrumentation at $55–80/hr becomes $90–95/hr DIDO. LNG contractor roles confirmed at $93.17 day / $107.15 night on SEEK. EEHA — Explosive Atmosphere — ticket adds further premium. Active listings: Rise Specialised Services, Glencore Telfer, Liontown Resources, BOC Welshpool, BHP Kwinana.</div>
+          <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s7-2-sr')"><div class="sname"><span class="arr">→</span>Senior E&amp;I Technician FIFO <span class="dtag">L2</span></div><div class="spay">$100–115/hr</div><div class="stoggle">+</div></div>
+              <div class="sub-body" id="s7-2-sr"><p>Lead instrument tech on a mine site or processing plant. Calibration programmes, complex fault diagnosis, shutdown instrument work.</p>
+                <div class="l2"><div class="sub-role"><div class="sub-role-header" onclick="togS('s7-2-fs')"><div class="sname"><span class="arr">→</span>Functional Safety Engineer FIFO — IEC 61511 <span class="dtag">L3</span></div><div class="spay">$150–200k · TÜV cert</div><div class="stoggle">+</div></div>
+                  <div class="sub-body" id="s7-2-fs"><p>SIS design and verification on site. Chronic shortage in WA's resources sector. FIFO functional safety engineers are among the highest-paid individual contributors on mine sites. <a class="xref" href="#b5-inst">see Ω5.1 Functional Safety</a></p></div>
+                </div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-node now-entry" id="b7-3">
+        <div class="role-node-header" onclick="togR('r7-3')">
+          <div class="rtitle-cell">
+            <div class="rtitle">7.3 — FIFO PLC / Commissioning Technician</div>
+            <div class="rsub">↗ <a href="#b5-plc">Ω5.3</a> · 2/1 DIDO · Jora Perth avg $107,500/yr · Rise $90–95/hr confirmed · WHV regional</div>
+          </div>
+          <div class="rpay-cell">$90–95/hr<div class="rpay-sub">2/1 DIDO · meals+accom</div></div>
+          <div class="rexp-cell">+</div>
+        </div>
+        <div class="role-body" id="r7-3">
+          <div class="rdesc">Commissioning work is project-based by nature and naturally FIFO. Mine site expansions, new processing plants, automation upgrades — all require commissioning techs on site for the duration. Jora Perth average $107,500/yr for commissioning tech. DIDO rates significantly higher. Rockwell Studio 5000 and Siemens TIA Portal are the primary requirements.</div>
+          <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s7-3-lead')"><div class="sname"><span class="arr">→</span>Lead Commissioning Technician FIFO <span class="dtag">L2</span></div><div class="spay">$100–120/hr</div><div class="stoggle">+</div></div>
+              <div class="sub-body" id="s7-3-lead"><p>Runs commissioning projects end-to-end on site. Loop check database, E&I and process team coordination, client engineering interface. Often billable at contractor rates rather than direct hire.</p>
+                <div class="l2"><div class="sub-role"><div class="sub-role-header" onclick="togS('s7-3-cse')"><div class="sname"><span class="arr">→</span>Controls Engineer FIFO <span class="dtag">L3</span></div><div class="spay">$130–170k · <a href="#b6-csw">mirrors Ω6.3</a></div><div class="stoggle">+</div></div>
+                  <div class="sub-body" id="s7-3-cse"><p>Writing and modifying PLC logic on site during commissioning and shutdown. Structured Text is syntactically C. The FIFO version of the highest individual contributor role in industrial automation.</p></div>
+                </div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-node now-entry" id="b7-4">
+        <div class="role-node-header" onclick="togR('r7-4')">
+          <div class="rtitle-cell">
+            <div class="rtitle">7.4 — FIFO Automation / Controls Field Tech</div>
+            <div class="rsub">↗ <a href="#b5-fst">Ω5.2</a> + <a href="#b6-aet">Ω6.1</a> · 2/1 · RCR Mining Technologies · CBRE · Itero · BHP/Rio/FMG direct · WHV regional</div>
+          </div>
+          <div class="rpay-cell">$85–105/hr<div class="rpay-sub">2/1 · meals+accom</div></div>
+          <div class="rexp-cell">+</div>
+        </div>
+        <div class="role-body" id="r7-4">
+          <div class="rdesc">The FIFO version of field automation and autonomous systems work. Deploying, commissioning, and maintaining automation systems and autonomous equipment on operating mine sites. RCR Mining Technologies, Epiroc, Sandvik, Caterpillar MineStar all deploy FIFO techs from Perth. Metro automation experience plus site medical unlocks these roles at significantly higher rates than Perth equivalents.</div>
+          <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s7-4-lead')"><div class="sname"><span class="arr">→</span>Autonomy Systems Lead Technician FIFO <span class="dtag">L2</span></div><div class="spay">$100–130/hr · <a href="#b6-aet">mirrors Ω6.1</a></div><div class="stoggle">+</div></div>
+              <div class="sub-body" id="s7-4-lead"><p>Technical lead on autonomous fleet deployment at a FIFO mine site. System performance, fault resolution, client technical interface. The person the ROC calls when an autonomous haul truck goes into fault at 3am. C background, embedded Linux familiarity, and physical site experience make this person extremely hard to replace.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-node" id="b7-5">
+        <div class="role-node-header" onclick="togR('r7-5')">
+          <div class="rtitle-cell">
+            <div class="rtitle">7.5 — FIFO Crane Operator — Shutdown Circuit</div>
+            <div class="rsub">↗ <a href="#b4-ct">Ω4.2</a> · Casual shutdown · Mammoet · PLI · Qube · Pilbara circuit</div>
+          </div>
+          <div class="rpay-cell">$75–95/hr<div class="rpay-sub">casual shutdown · meals+accom</div></div>
+          <div class="rexp-cell">+</div>
+        </div>
+        <div class="role-body" id="r7-5">
+          <div class="rdesc">Crane operators on the Pilbara shutdown circuit rotate through mine and refinery shutdowns year-round — 2–6 week blocks at top rates. Mammoet Perth deploys casual shutdown teams from Perth to Pilbara. Large all-terrain crane operators are the premium tier. Perth-based. Fly in for shutdown. Fly home. Repeat.</div>
+          <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s7-5-hl')"><div class="sname"><span class="arr">→</span>Heavy Lift Specialist FIFO ◈ <span class="dtag">L2</span></div><div class="spay">$100–130/hr shutdown</div><div class="stoggle">+</div></div>
+              <div class="sub-body" id="s7-5-hl"><p>Multi-crane lifts, oversized loads, mine capital shutdowns. Among the highest casual hourly rates in WA's labour market. <a href="#conv">See Convergence: Shutdown/Turnaround.</a></p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-node" id="b7-6">
+        <div class="role-node-header" onclick="togR('r7-6')">
+          <div class="rtitle-cell">
+            <div class="rtitle">7.6 — FIFO Site Safety / Emergency Response Team</div>
+            <div class="rsub">↗ <a href="#dfes">DFES Volunteer</a> + any Ω5–Ω6 · ERT site allowance premium on top of base rate · WHV regional</div>
+          </div>
+          <div class="rpay-cell">$75–95/hr<div class="rpay-sub">+ ERT site allowance</div></div>
+          <div class="rexp-cell">+</div>
+        </div>
+        <div class="role-body" id="r7-6">
+          <div class="rdesc">Mine sites require ERTs — Emergency Response Teams — on site at all times. ERT members receive a site allowance premium on top of their base role rate. The DFES ticket stack (BA, ICS, structural firefighting) directly satisfies ERT qualification requirements at zero cost. A FIFO automation tech who is also ERT-qualified carries two value streams simultaneously. The rarer the combination, the higher the leverage at contract renewal or sponsorship discussion.</div>
+          <a class="xref" href="#dfes">see ◈ DFES Volunteer Firefighter — full ticket crossover table</a>
+          <div class="sub-branches"><div class="sub-branches-title">Progression Tree</div>
+            <div class="sub-role"><div class="sub-role-header" onclick="togS('s7-6-ertl')"><div class="sname"><span class="arr">→</span>ERT Leader <span class="dtag">L2</span></div><div class="spay">$90–110/hr + allowance</div><div class="stoggle">+</div></div>
+              <div class="sub-body" id="s7-6-ertl"><p>Leads emergency response on site. ICS command familiarity from DFES is directly applicable. A FIFO worker who has responded to real incidents as a DFES volunteer arrives with credibility that cannot be simulated in a training exercise.</p>
+                <div class="l2"><div class="sub-role"><div class="sub-role-header" onclick="togS('s7-6-sso')"><div class="sname"><span class="arr">→</span>Site Safety Officer <span class="dtag">L3</span></div><div class="spay">$110–140/hr</div><div class="stoggle">+</div></div>
+                  <div class="sub-body" id="s7-6-sso"><p>Responsible for site safety management system compliance, incident investigation, and emergency preparedness. Formal HSE qualification pathway. CompSci background applicable to safety management software and data systems.</p>
+                    <div class="l3"><div class="sub-role"><div class="sub-role-header" onclick="togS('s7-6-hse')"><div class="sname"><span class="arr">→</span>HSE Advisor / Manager <span class="dtag">L4</span></div><div class="spay">$130–160/hr</div><div class="stoggle">+</div></div>
+                      <div class="sub-body" id="s7-6-hse"><p>Senior HSE advisory role across multiple sites or at corporate level. The terminal node of the safety track. Almost nobody walks this path with an automation background underneath it. That is the moat.</p></div>
+                    </div></div>
+                  </div>
+                </div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ DFES VOLUNTEER FIREFIGHTER ═══ -->
+  <div class="seq-block" id="dfes">
+    <div class="seq-header">◈ PARALLEL TRACK — DFES Volunteer Firefighter</div>
+    <div class="seq-body">
+      <p style="font-size:11px;line-height:1.6;margin-bottom:13px;border-left:3px solid #000;padding-left:8px;">Not a pay path. A life path. An insane hobby that certifies you up at zero cost and fills your off-swing with something that matters. DFES — Department of Fire and Emergency Services — runs 29,000+ volunteers across WA. Pilbara brigades in Karratha, Port Hedland, and Newman are heavily populated by FIFO workers operating exactly this model: on during off swing, stood down during work swing. Register at <a href="https://dfes.vol.org.au">dfes.vol.org.au</a> once you have a Perth address. Processing: 2–3 weeks. Gear provided. Cost: zero.</p>
+
+      <table>
+        <thead><tr><th>DFES Ticket / Training</th><th>What It Is</th><th>Industrial / Mining Crossover</th><th>Links To</th></tr></thead>
+        <tbody>
+          <tr><td><b>Bush Firefighter Training Program</b></td><td>Initial attack, suppression, pump operation. Automatic on joining.</td><td>Mine site emergency response baseline. Required for all site ERTs.</td><td><a href="#b7-6">Ω7.6</a></td></tr>
+          <tr><td><b>BA — Breathing Apparatus Operator</b></td><td>SCBA use in smoke and hazmat environments.</td><td>Direct standalone industrial ticket. Confined space, mine rescue, process plant emergency response. ERT prerequisite on all major mine sites.</td><td><a href="#b7-6">Ω7.6</a></td></tr>
+          <tr><td><b>Structural Firefighting — VFRS stream</b></td><td>Building entry, search and rescue, structural fire suppression.</td><td>Mine site structure fires, processing plant emergency scenarios. ERT premium qualification.</td><td><a href="#b7-6">Ω7.6</a></td></tr>
+          <tr><td><b>ICS — Incident Control System</b></td><td>Unified command framework for multi-agency emergencies.</td><td>Identical framework used in major mine site emergency response. Operational ICS familiarity is rare and valued by site safety managers.</td><td><a href="#b7-6">Ω7.6</a> · <a href="#s7-6-ertl">ERT Leader</a></td></tr>
+          <tr><td><b>Hazmat Awareness / Operations</b></td><td>Identifying and managing hazardous materials incidents.</td><td>Direct crossover to DG Inspector (<a href="#b2-cs">Ω2.2</a>) and Hazmat Consultant pathways. Accelerates DG certification pathway.</td><td><a href="#b2-cs">Ω2.2</a></td></tr>
+          <tr><td><b>Pump Operator</b></td><td>Operating firefighting pumps and water delivery systems.</td><td>Process plant pump knowledge. Hydraulics fundamentals applicable to instrumentation and process control work.</td><td><a href="#b5-inst">Ω5.1</a></td></tr>
+          <tr><td><b>Chainsaw Operator</b></td><td>Safe felling and clearing in operational conditions.</td><td>Mine site and civil site clearing. Standalone ticket adds to site licence portfolio.</td><td>General site access</td></tr>
+          <tr><td><b>4WD Operations</b></td><td>Off-road driving in emergency conditions across remote terrain.</td><td>Mine site vehicle operation. Adds to site licence portfolio. Directly applicable in Pilbara brigades.</td><td>Pilbara site access</td></tr>
+          <tr><td><b>First Aid currency</b></td><td>Maintained automatically through active volunteer service.</td><td>Required for all site roles. Renewals funded by brigade. Zero ongoing cost.</td><td>All site roles</td></tr>
+          <tr><td><b>SWORD — Communications Unit</b></td><td>Mobile satellite technology, high-resolution video, thermal imaging, emergency mesh radio. Deployed during major incidents state-wide.</td><td><b>Direct crossover to <a href="#b5-otn">Ω5.4 OT Network Tech</a>.</b> SWORD hardware stack is identical to mine site remote monitoring infrastructure. Same protocols. Same physical equipment categories. Same diagnostic mindset. The person who operates both is not common.</td><td><a href="#b5-otn">Ω5.4</a> · <a href="#conv">Emergency Automation Specialist — BROADSIDE Roadmap</a></td></tr>
+        </tbody>
+      </table>
+
+      <p style="font-size:11px;line-height:1.5;border-left:3px solid #000;padding-left:8px;margin-top:13px;"><b>The Pilbara brigade model:</b> Karratha, Port Hedland, and Newman Volunteer Fire and Rescue brigades are FIFO-aware by necessity. Registering with a Pilbara brigade during a FIFO swing is standard practice and widely accepted. During off swing in Perth, you are attached to your Perth local brigade. During work swing in the Pilbara, you are available to the local brigade if needed. The training pipeline is long — every week you delay registration is a week of delay before first operational deployment. Register in Week 1.</p>
     </div>
   </div>
 
@@ -1094,8 +1278,8 @@
   <div>e = 2.71828... · φ = 1.61803... · FIB(n) = FIB(n-1) + FIB(n-2) · lim FIB(n+1)/FIB(n) = φ</div>
 </div>
 
+
 <script>
-  function tog(id) { const e = document.getElementById(id); if (e) e.classList.toggle('collapsed'); }
   function togR(id) {
     const b = document.getElementById(id); if (!b) return;
     const open = b.classList.toggle('open');
@@ -1110,28 +1294,32 @@
   }
   function go(id) {
     const el = document.getElementById(id); if (!el) return;
-
-    // Walk up DOM to open parent branch if collapsed
-    const parentBranch = el.closest('.branch-body');
-    if (parentBranch) parentBranch.classList.remove('collapsed');
-
-    // Auto-open the role body so content is immediately visible
-    const roleBody = el.querySelector('.role-body');
-    if (roleBody) {
-      roleBody.classList.add('open');
-      const toggleBtn = el.querySelector('.rexp-cell');
-      if (toggleBtn) toggleBtn.textContent = '−';
-    }
-
+    // Open parent <details> if closed
+    const pd = el.closest('details.branch-section');
+    if (pd) pd.open = true;
+    // Open role-body if target is a role-node
+    const rb = el.querySelector('.role-body');
+    if (rb) { rb.classList.add('open'); const e = el.querySelector('.rexp-cell'); if (e) e.textContent = '−'; }
     el.scrollIntoView({ block: 'start' });
   }
+  document.addEventListener('click', function(e) {
+    const a = e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    const id = href.slice(1);
+    const el = document.getElementById(id);
+    if (!el) return;
+    e.preventDefault();
+    go(id);
+  });
   function expandAll() {
-    document.querySelectorAll('.branch-body').forEach(e => e.classList.remove('collapsed'));
+    document.querySelectorAll('details.branch-section').forEach(d => d.open = true);
     document.querySelectorAll('.role-body').forEach(e => { e.classList.add('open'); const c = e.previousElementSibling?.querySelector('.rexp-cell'); if (c) c.textContent = '−'; });
     document.querySelectorAll('.sub-body').forEach(e => { e.classList.add('open'); const c = e.previousElementSibling?.querySelector('.stoggle'); if (c) c.textContent = '−'; });
   }
   function collapseAll() {
-    document.querySelectorAll('.branch-body').forEach(e => e.classList.add('collapsed'));
+    document.querySelectorAll('details.branch-section').forEach(d => { if (!d.id.match(/^b[567]$/)) d.open = false; });
     document.querySelectorAll('.role-body').forEach(e => { e.classList.remove('open'); const c = e.previousElementSibling?.querySelector('.rexp-cell'); if (c) c.textContent = '+'; });
     document.querySelectorAll('.sub-body').forEach(e => { e.classList.remove('open'); const c = e.previousElementSibling?.querySelector('.stoggle'); if (c) c.textContent = '+'; });
   }
