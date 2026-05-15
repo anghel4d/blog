@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perth Labour Market — Canonical Salary Table</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#fff;color:#000;padding:16px}
+h1{font-size:15px;text-transform:uppercase;margin-bottom:4px;font-weight:500}
+.sub{font-size:11px;color:#666;margin-bottom:16px}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#f5f5f5;color:#666;font-weight:500;font-size:11px;padding:6px 8px;text-align:right;border-bottom:1px solid #e0e0e0;white-space:nowrap;position:sticky;top:0;z-index:2}
+th:nth-child(1),th:nth-child(2){text-align:left}
+th:nth-child(1){width:44px;min-width:44px}
+th:nth-child(2){min-width:220px}
+td{padding:5px 8px;border-bottom:0.5px solid #e8e8e8;color:#000;text-align:right;font-size:11px;white-space:nowrap}
+td:nth-child(1),td:nth-child(2){text-align:left}
+td:nth-child(2){white-space:normal;line-height:1.4;font-size:12px}
+tr:hover td{background:#fafafa}
+.sec td{background:#f5f5f5;font-weight:500;font-size:10px;color:#666;padding:5px 8px;letter-spacing:0.06em;text-transform:uppercase;text-align:left}
+.omega{font-weight:500;font-size:10px;padding:2px 5px;border-radius:3px;display:inline-block;white-space:nowrap}
+.o1{background:#EEEDFE;color:#3C3489}
+.o2{background:#E1F5EE;color:#085041}
+.o3{background:#FAEEDA;color:#633806}
+.o4{background:#FAECE7;color:#712B13}
+.o5{background:#E6F1FB;color:#0C447C}
+.o6{background:#EAF3DE;color:#27500A}
+.o7{background:#FBEAF0;color:#72243E}
+.med{font-weight:500;font-size:12px}
+.hi{color:#185FA5;font-weight:500}
+.note{font-size:10px;color:#666;white-space:normal;max-width:200px;line-height:1.3}
+.tag{font-size:9px;padding:1px 4px;border-radius:2px;margin-left:3px;vertical-align:middle;display:inline-block}
+.whv{background:#e8e8e8;color:#444}
+.scr{background:#faeeda;color:#633806}
+.fifo{background:#FBEAF0;color:#72243E}
+input[type=text]{width:100%;font-size:12px;padding:6px 10px;margin-bottom:10px;border:1px solid #ccc;border-radius:4px;background:#fff;color:#000}
+.tally{font-size:11px;color:#666;margin-bottom:8px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;font-size:11px;color:#666}
+.footer{margin-top:16px;font-size:10px;color:#999;border-top:1px solid #e0e0e0;padding-top:8px}
+</style>
+</head>
+<body>
+<h1>Perth Labour Market — Canonical Salary Table</h1>
+<div class="sub">BROADSIDE LOGISTICAL INC. · BROADSIDE AUSTRALIA — Research Phase · All figures AUD · Sources: Glassdoor Perth WA, SEEK, Indeed, Jora, live job ads · April 2026</div>
+<div class="legend">
+  <span><span class="tag whv">◆ WHV</span> accessible on Working Holiday Visa</span>
+  <span><span class="tag scr">! screen</span> screen-heavy / flag eye</span>
+  <span><span class="tag fifo">FIFO</span> annual = 2/1 roster ~182 working days; accom+meals included</span>
+  <span>† P90 reflects contract billing rates</span>
+</div>
+<input type="text" id="srch" placeholder="Search roles, Ω branch, or keyword..." oninput="go()">
+<div class="tally" id="tally"></div>
+<div class="wrap">
+<table id="tbl">
+<thead><tr>
+<th>Ω</th>
+<th>Role</th>
+<th>P10</th><th>P25</th><th>Median</th><th>P75</th><th>P90</th>
+<th>$/hr</th>
+<th>Source / Notes</th>
+</tr></thead>
+<tbody id="tb"></tbody>
+</table>
+</div>
+<div class="footer">
+  e = 2.71828... · φ = 1.61803... · FIB(n) = FIB(n-1) + FIB(n-2) · lim FIB(n+1)/FIB(n) = φ<br>
+  Data blended from Glassdoor Perth WA, SEEK disclosed ranges, Indeed Perth actuals, Jora averages, and live job ad rates. Sample sizes vary; industrial roles have thin Perth-specific samples. P90 for specialist roles reflects contract/consulting billing rates. FIFO annual equivalents assume 2/1 roster (14 days on, 7 off) at 12hr days, ~182 working days/yr. Accommodation and meals included on swing. All figures gross before tax and superannuation.
+</div>
+
+<script>
+const K = n => '$' + Math.round(n) + 'k';
+const data = [
+["Ω1","Tower Hand","W",58,68,80,95,108,"36–52","Live ads; entry; 2 wks to employ"],
+["Ω1","Structural Rigger RB/RI","W",85,95,110,130,148,"48–68","RI ticket +$10k"],
+["Ω1","Advanced Rigger RA","",105,120,135,155,178,"58–78","Live SEEK Jan 2026"],
+["Ω1","Dogman","",78,88,100,118,135,"40–58","C6 endorsement"],
+["Ω1","RF / Antenna Tech","S",90,105,122,145,168,"52–80","Screen flag; post-eye"],
+["Ω1","RAN Engineer","S",120,138,158,185,210,"65–100","Screen-heavy; post-eye only"],
+["Ω2","Stevedore — MUA casual","W",68,78,105,133,158,"50–72","Glassdoor AU n=22; avg $105k; penalties push median above base"],
+["Ω2","Port Equipment Operator RTG/STS","",100,115,135,158,185,"58–85","STS crane top tier"],
+["Ω2","Cargo Surveyor / DG Inspector","",72,85,100,120,145,"45–75","DG cert adds premium"],
+["Ω2","Freight Coordinator","S",60,70,82,95,110,"30–42","Screen-heavy; flagged"],
+["Ω3","LF Forklift Operator","W",55,65,74,85,98,"34–48","Indeed Perth avg $35.73/hr n=65"],
+["Ω3","Reach Truck / VNA","W",62,72,85,100,115,"38–52","Cold storage premium"],
+["Ω3","Yard Supervisor","",78,90,105,122,140,"42–58",""],
+["Ω3","WMS Superuser → Implementation Consultant","",95,110,130,158,195,"50–95","IT/logistics convergence"],
+["Ω4","HR Truck Driver","W",75,88,100,115,132,"42–58",""],
+["Ω4","Concrete Agitator","W",90,105,120,138,158,"55–80","Fastest cash; antisocial hrs + penalties"],
+["Ω4","HC Driver — linehaul","W",78,90,105,122,142,"40–58","Perth→Adelaide; Fremantle port"],
+["Ω4","Large Mobile Crane Operator","",100,118,138,160,185,"48–95","Glassdoor Perth n=124 avg $48/hr; SEEK nat'l $95–115k"],
+["Ω4","Large Crane — Shutdown Circuit","",130,148,168,195,225,"85–110","Anti-FIFO FIFO money; Mammoet/Boom"],
+["Ω4","Civil Plant / Machine Control Spec","",75,88,105,125,148,"40–65","GPS/GNSS calibration; IT crossover"],
+["Ω5","Instrumentation Tech — entry","W",85,100,118,140,165,"55–80","Jora Perth avg $107.5k; entry floor lower"],
+["Ω5","Senior Instrumentation Tech","",120,135,155,178,200,"70–95","Glassdoor Perth P25 $133k confirms range"],
+["Ω5","Instrumentation Engineer","",132,148,168,192,220,"75–105","SEEK; RPL pathway viable"],
+["Ω5","Analyser Technician","",122,138,158,182,208,"75–100","Genuinely scarce niche"],
+["Ω5","Functional Safety Eng IEC 61511 — TÜV","",165,182,205,238,285,"90–140","Chronic shortage. Hatch Perth live ad. Req. 3+ yrs exp for TÜV cert"],
+["Ω5","Field Service Tech — Junior FST","W",96,108,122,145,195,"58–85","Glassdoor Perth WA n=36 avg $116k; P90 revised from Glassdoor P75 $199k blended data"],
+["Ω5","Field Service Tech — Senior FST","",145,165,188,218,434,"80–200+","†P90 $434k retained — Glassdoor Perth actual. Contract billing at $200/hr on 12-month engagement is real money"],
+["Ω5","Automation Solutions Architect","",178,195,218,248,295,"120–160","Senior vendor; pre-sales + delivery"],
+["Ω5","PLC Commissioning Tech — junior","W",95,110,128,152,172,"55–80","Jora Perth avg $107.5k"],
+["Ω5","Lead Commissioning Tech","W",132,148,165,188,215,"90–95","Live SEEK $90–95/hr DIDO confirmed"],
+["Ω5","PLC / Controls Engineer","",120,135,150,175,200,"65–100","Industrial SW premium over generic Perth SW"],
+["Ω5","OT Network Tech","W",112,128,148,175,205,"60–90","Scarce; CompSci direct advantage"],
+["Ω5","OT Cybersecurity Specialist","",105,125,152,192,235,"65–115","Glassdoor Perth CyberSec Eng avg $145k, P75 $200k, P90 $221k"],
+["Ω5","OT / ICS Security Architect","",155,178,210,255,320,"130–175","EY Perth hiring OT Cyber. †Contract ceiling higher. Scarcest skill in WA industrial"],
+["Ω5","Systems / Applications Engineer","",145,162,185,215,255,"80–125","DCS platform authority"],
+["Ω5","Product Specialist / Technical Consultant","",165,185,210,245,290,"90–145","Global travel; Emerson/Honeywell top tier"],
+["Ω6","Autonomous Equip Field Tech — entry","",100,115,135,158,182,"58–85","RCT Automation Perth; apply directly"],
+["Ω6","Autonomy Systems Lead Tech","",132,150,170,198,228,"80–110",""],
+["Ω6","Autonomous Systems Engineer","",132,150,170,198,232,"75–115","Perth R&D: RCT, Caterpillar, Fortescue Tech"],
+["Ω6","Autonomy Architecture Lead","",170,185,205,235,275,"100–138","Rare globally; Perth demand centre"],
+["Ω6","ROC Operator","S",75,85,95,108,120,"40–60","Screen-heavy; confirm eye stability. Perth-based"],
+["Ω6","ROC Systems Engineer","",132,150,170,198,228,"75–110","OT/IT convergence premium"],
+["Ω6","Digital Mine / Smart Mine Engineer","",140,158,178,205,240,"75–115","BHP/Rio/FMG; Perth-based"],
+["Ω6","Mine of Future Programme Lead","",175,195,218,252,285,"90–138","Rio Tinto / BHP programme roles"],
+["Ω6","Controls Software Engineer","",110,125,145,170,200,"65–100","C game engine = direct proof of concept. Industrial premium over generic Perth SW ($110k median)"],
+["Ω6","Senior Controls / Lead SW Eng","",145,162,182,212,248,"80–125",""],
+["Ω6","Automation Engineering Manager","",160,178,200,228,265,"85–130",""],
+["Ω6","CTO / VP Automation — Mining Tech","",195,220,250,292,375,"100–185","†RCT / mining tech startups; equity possible"],
+["Ω6","Embedded Systems Engineer","",125,142,162,190,220,"65–110","C game engine IS the portfolio"],
+["Ω6","Senior Embedded / Firmware Engineer","",150,168,190,218,250,"80–125",""],
+["Ω6","Safety-Critical Firmware IEC 61508","",178,198,225,262,310,"95–158","Extremely scarce globally. Perth autonomous mining is demand centre"],
+["Ω6","Principal Engineer — Autonomous Systems","",202,225,258,298,360,"105–178","Handful of people in WA. Pipeline starts now"],
+["Ω7","FIFO Structural Rigger","F",110,125,140,162,180,"58–68 · 2/1","Live SEEK Perth; accom+meals incl"],
+["Ω7","FIFO Advanced Rigger / Shutdown Spec","F",132,150,172,198,228,"65–78 · 2/1","PLI Pilbara shutdown circuit"],
+["Ω7","FIFO E&I / Instrumentation Tech","F",162,182,202,228,262,"90–95 · 8/6","SEEK confirmed: Rise Specialised $90–95/hr DIDO"],
+["Ω7","FIFO Senior E&I Tech","F",185,205,225,250,275,"100–115 · 8/6",""],
+["Ω7","FIFO PLC / Commissioning Tech","F",162,182,202,228,262,"90–95 · 2/1","Rise Specialised confirmed"],
+["Ω7","FIFO Lead Commissioning Tech","F",185,205,228,255,280,"100–120 · 2/1",""],
+["Ω7","FIFO Controls Engineer","F",198,222,248,282,320,"108–135 · 2/1","Highest FIFO individual contributor"],
+["Ω7","FIFO Automation / Controls Tech","F",158,178,198,225,258,"85–105 · 2/1","RCR Mining Tech; BHP/Rio/FMG direct"],
+["Ω7","FIFO Crane — Shutdown Circuit","F",132,150,172,198,232,"75–95 · casual","Mammoet/PLI Perth"],
+["Ω7","FIFO Site Safety / ERT","F",132,150,172,198,228,"75–95 + ERT allow.","DFES BA + ICS = ERT eligible"],
+["Ω7","FIFO ERT Leader","F",162,180,202,228,258,"90–110 + allow.","ICS command from DFES directly applicable"],
+["Ω7","FIFO Functional Safety Eng IEC 61511","F",228,255,285,325,375,"125–165 · 2/1","†Rarest FIFO premium. TÜV cert + site exp = near-unique"],
+["Ω7","LNG E&I Tech — nights","F",195,218,242,272,308,"107 nights · 8/6","Techforce SEEK live: $93.17 day / $107.15 night"],
+];
+
+const oc = {"Ω1":"o1","Ω2":"o2","Ω3":"o3","Ω4":"o4","Ω5":"o5","Ω6":"o6","Ω7":"o7"};
+const labels = {"Ω1":"Comms Rigger","Ω2":"Stevedore","Ω3":"Heavy Forklift","Ω4":"HR Truck Driver","Ω5":"Field Automation Tech","Ω6":"Mining Automation","Ω7":"FIFO — The Remote Layer"};
+
+function render(rows){
+  let h='', prev='';
+  rows.forEach(r=>{
+    const [o,role,tags,p10,p25,med,p75,p90,hr,note]=r;
+    if(o!==prev){
+      h+=`<tr class="sec"><td colspan="9">${o} · ${labels[o]}</td></tr>`;
+      prev=o;
+    }
+    const wb = tags.includes('W') ? `<span class="tag whv">◆ WHV</span>` : '';
+    const sb = tags.includes('S') ? `<span class="tag scr">! screen</span>` : '';
+    const fb = tags.includes('F') ? `<span class="tag fifo">FIFO</span>` : '';
+    const p90d = p90>=300 ? `<span class="hi">${K(p90)}†</span>` : K(p90);
+    h+=`<tr>
+<td><span class="omega ${oc[o]}">${o}</span></td>
+<td>${role}${wb}${sb}${fb}</td>
+<td>${K(p10)}</td><td>${K(p25)}</td>
+<td class="med">${K(med)}</td>
+<td>${K(p75)}</td><td>${p90d}</td>
+<td style="font-size:10px;color:#888">${hr}</td>
+<td class="note">${note}</td>
+</tr>`;
+  });
+  document.getElementById('tb').innerHTML=h;
+  document.getElementById('tally').textContent=rows.length+' roles shown';
+}
+
+function go(){
+  const q=document.getElementById('srch').value.toLowerCase().trim();
+  render(q?data.filter(r=>r[0].toLowerCase().includes(q)||r[1].toLowerCase().includes(q)||r[8].toLowerCase().includes(q)||r[9].toLowerCase().includes(q)):data);
+}
+
+render(data);
+</script>
+</body>
+</html>
